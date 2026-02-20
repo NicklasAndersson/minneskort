@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import initialCards from './cards';
+import CardEditor, { loadCustomCards, saveCustomCards, exportCardsToFile, importCardsFromFile } from './CardEditor';
 
 // Enkel markdown-parser
 const parseMarkdown = (text) => {
@@ -32,8 +33,8 @@ const ImageContent = ({ data }) => (
 const MnemonicFront = ({ items }) => (
   <div className="flex flex-col gap-1 mt-6 text-left w-full px-6">
     {items.map((item, idx) => (
-      <div key={idx} className="flex gap-3 text-sm">
-        <span className="font-black text-slate-800 w-4">{item.letter}</span>
+      <div key={idx} className="flex gap-3 text-base">
+        <span className="font-black text-slate-800 w-5">{item.letter}</span>
         <span className="text-slate-700 font-semibold">{item.title}</span>
       </div>
     ))}
@@ -52,43 +53,22 @@ const MnemonicBack = ({ items }) => (
   </div>
 );
 
-// Ramsa för Light-kortet (Bokstav + Titel + Beskrivning i ett svep)
-const MnemonicFull = ({ items }) => (
-  <div className="flex flex-col gap-2 mt-3">
-    {items.map((item, idx) => (
-      <div key={idx} className="flex gap-2 text-[12px] leading-tight">
-        <div className="font-bold text-base text-slate-800 w-4 flex-shrink-0">{item.letter}</div>
-        <div className="mt-[2px]">
-          <span className="font-bold text-slate-800">{item.title}: </span>
-          <span className="text-slate-600">{item.description}</span>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
 // 3. LAYOUT-KOMPONENTER (RADER & PANELER)
 
-// Diagonal linje i övre vänstra hörnet (~1cm)
+// Streckad triangel i övre vänstra hörnet
 const CornerLine = () => (
-  <div className="absolute top-0 left-0 w-[15mm] border-t border-slate-400 origin-top-left rotate-45 z-10"></div>
-);
-
-// En tom panel (om light-kort saknar parter)
-const EmptyPanel = ({ isRight }) => (
-  <div className={`w-[105mm] h-full p-6 flex flex-col bg-slate-50 opacity-20 ${!isRight ? 'border-r border-dashed border-gray-400' : ''}`}></div>
+  <svg className="absolute top-0 left-0 z-10" width="15mm" height="15mm" viewBox="0 0 40 40">
+    <polyline points="0,40 0,0 40,0" fill="none" stroke="rgb(148 163 184)" strokeWidth="1" strokeDasharray="3,3" />
+  </svg>
 );
 
 // Framsidan av ett vikbart kort
 const FoldableFront = ({ card }) => (
   <div className="w-[105mm] h-full border-r border-dashed border-gray-400 p-6 flex flex-col items-center text-center relative overflow-hidden">
     <CornerLine />
-    <div className="absolute top-4 left-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-slate-300 px-2 py-1 rounded">
-      {card.category}
-    </div>
     <div className="mt-8">
-      <h1 className="text-2xl font-black text-slate-900 mb-1">{card.title}</h1>
-      {card.subtitle && <p className="text-xs text-slate-600 italic px-2">{card.subtitle}</p>}
+      <h1 className="text-3xl font-black text-slate-900 mb-1">{card.title}</h1>
+      {card.subtitle && <p className="text-sm text-slate-600 italic px-2">{card.subtitle}</p>}
     </div>
     {card.content.type === 'mnemonic' && <MnemonicFront items={card.content.items} />}
     <div className="absolute bottom-4 text-[10px] text-slate-400">Vik på mitten →</div>
@@ -98,55 +78,24 @@ const FoldableFront = ({ card }) => (
 // Baksidan av ett vikbart kort
 const FoldableBack = ({ card }) => (
   <div className="w-[105mm] h-full p-6 flex flex-col relative overflow-hidden">
-    <CornerLine />
-    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 pb-1 mb-2">
-      {card.title} - Detaljer
-    </div>
     {card.content.type === 'mnemonic' && <MnemonicBack items={card.content.items} />}
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
     {card.content.type === 'image' && <ImageContent data={card.content} />}
+    {card.content.notes && (
+      <div className="mt-auto pt-3 border-t border-slate-200">
+        <FreeText text={card.content.notes} />
+      </div>
+    )}
   </div>
 );
 
-// Ett enkelsidigt "Light"-kort
-const LightPanel = ({ card, isRight }) => {
-  if (!card) return <EmptyPanel isRight={isRight} />;
+// En rad på A4:an (1 vikbart kort)
+const PrintRow = ({ card }) => {
+  if (!card) return <div className="flex w-full h-[130mm]" />;
   return (
-    <div className={`w-[105mm] h-full p-6 flex flex-col relative overflow-hidden ${!isRight ? 'border-r border-dashed border-gray-400' : ''}`}>
-      <CornerLine />
-      <div className="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-slate-300 px-2 py-1 rounded">
-        {card.category}
-      </div>
-      <h1 className="text-xl font-black text-slate-900 mb-1 mt-6">{card.title}</h1>
-      {card.subtitle && <p className="text-xs text-slate-600 italic mb-2">{card.subtitle}</p>}
-
-      <div className="mt-1">
-        {card.content.type === 'mnemonic' && <MnemonicFull items={card.content.items} />}
-        {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
-        {card.content.type === 'image' && <ImageContent data={card.content} />}
-      </div>
-    </div>
-  );
-};
-
-// En rad på A4:an (1 Foldable ELLER 2 Light-kort)
-const PrintRow = ({ row, isLastRow }) => {
-  const rowClasses = `flex w-full h-[148.5mm] ${!isLastRow ? 'border-b border-dashed border-gray-400' : ''}`;
-
-  if (row.isFoldable) {
-    return (
-      <div className={rowClasses}>
-        <FoldableFront card={row.slots[0]} />
-        <FoldableBack card={row.slots[0]} />
-      </div>
-    );
-  }
-
-  // Om det är light-kort
-  return (
-    <div className={rowClasses}>
-      <LightPanel card={row.slots[0]} isRight={false} />
-      <LightPanel card={row.slots[1]} isRight={true} />
+    <div className="flex w-full h-[130mm] border border-gray-400">
+      <FoldableFront card={card} />
+      <FoldableBack card={card} />
     </div>
   );
 };
@@ -154,76 +103,35 @@ const PrintRow = ({ row, isLastRow }) => {
 // En komplett A4-sida
 const PrintPage = ({ rows }) => {
   return (
-    <div className="print-page w-[210mm] h-[297mm] bg-white mx-auto mb-8 shadow-lg print:shadow-none print:mb-0 flex flex-col box-border border border-gray-200 print:border-none">
-      <PrintRow row={rows[0]} isLastRow={false} />
-      <PrintRow row={rows[1]} isLastRow={true} />
+    <div className="print-page w-[210mm] h-[297mm] bg-white mx-auto mb-8 shadow-lg print:shadow-none print:mb-0 flex flex-col justify-center gap-4 box-border border border-gray-200 print:border-none p-[10mm] print:p-[10mm]">
+      <PrintRow card={rows[0]} />
+      <PrintRow card={rows[1]} />
     </div>
   );
 };
 
-// 4. PACKNINGS-ALGORITM (Hanterar Light vs Foldable)
+// 4. PACKNINGS-ALGORITM (2 kort per A4-sida)
 const packDeckIntoPages = (deck) => {
   const pages = [];
-  let currentPage = { rows: [] };
-  let currentRow = { isFoldable: false, slots: [] };
-
-  const pushRowToPage = () => {
-    // Om rowen bara har 1 kort (och det är ett light-kort), fyll på med null
-    if (!currentRow.isFoldable && currentRow.slots.length === 1) {
-      currentRow.slots.push(null);
-    }
-
-    if (currentRow.slots.length > 0) {
-      currentPage.rows.push(currentRow);
-    }
-
-    // Nollställ raden
-    currentRow = { isFoldable: false, slots: [] };
-
-    // Om sidan har 2 rader, skjut in den i pages
-    if (currentPage.rows.length === 2) {
-      pages.push(currentPage);
-      currentPage = { rows: [] };
-    }
-  };
-
-  deck.forEach(card => {
-    if (card.layout === 'light') {
-      currentRow.slots.push(card);
-      // Om vi har 2 light-kort på raden är den full
-      if (currentRow.slots.length === 2) {
-        pushRowToPage();
-      }
-    } else {
-      // Foldable kort. Om vi redan har ett ensamt light-kort på raden måste vi spola den raden först.
-      if (currentRow.slots.length > 0) {
-        pushRowToPage();
-      }
-      currentRow.isFoldable = true;
-      currentRow.slots.push(card);
-      pushRowToPage();
-    }
-  });
-
-  // Skjut in sista raden om den har kvarvarande kort
-  if (currentRow.slots.length > 0) {
-    pushRowToPage();
+  for (let i = 0; i < deck.length; i += 2) {
+    pages.push([deck[i], deck[i + 1] || null]);
   }
-
-  // Om sista sidan bara har 1 rad, fyll på med en tom rad
-  if (currentPage.rows.length === 1) {
-    currentPage.rows.push({ isFoldable: false, slots: [null, null] });
-    pages.push(currentPage);
-  }
-
   return pages;
 };
 
 
 // 5. HUVUDAPPLIKATION
 export default function App() {
-  const [library] = useState(initialCards);
+  const [customCards, setCustomCards] = useState(() => loadCustomCards());
   const [deck, setDeck] = useState([]);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editingCard, setEditingCard] = useState(null);
+
+  const library = [...initialCards, ...customCards];
+
+  useEffect(() => {
+    saveCustomCards(customCards);
+  }, [customCards]);
 
   const addToDeck = (card) => {
     setDeck([...deck, card]);
@@ -231,6 +139,52 @@ export default function App() {
 
   const removeFromDeck = (indexToRemove) => {
     setDeck(deck.filter((_, idx) => idx !== indexToRemove));
+  };
+
+  const isCustom = (card) => customCards.some((c) => c.id === card.id);
+
+  const handleSaveCard = (cardData) => {
+    if (editingCard) {
+      setCustomCards((prev) => prev.map((c) => (c.id === editingCard.id ? cardData : c)));
+      setDeck((prev) => prev.map((c) => (c.id === editingCard.id ? cardData : c)));
+    } else {
+      if (library.some((c) => c.id === cardData.id)) {
+        cardData.id = cardData.id + '-' + Date.now();
+      }
+      setCustomCards((prev) => [...prev, cardData]);
+    }
+    setEditorOpen(false);
+    setEditingCard(null);
+  };
+
+  const handleEditCard = (card) => {
+    setEditingCard(card);
+    setEditorOpen(true);
+  };
+
+  const handleDeleteCard = (card) => {
+    if (!confirm(`Ta bort "${card.title}"?`)) return;
+    setCustomCards((prev) => prev.filter((c) => c.id !== card.id));
+    setDeck((prev) => prev.filter((c) => c.id !== card.id));
+  };
+
+  const handleImport = async () => {
+    try {
+      const cards = await importCardsFromFile();
+      const newCards = cards.map((c) => ({
+        ...c,
+        layout: 'foldable',
+        id: c.id || c.title.toLowerCase().replace(/[^a-zåäö0-9]+/g, '-'),
+      }));
+      setCustomCards((prev) => [...prev, ...newCards]);
+    } catch (err) {
+      if (err.message) alert(err.message);
+    }
+  };
+
+  const handleExport = () => {
+    if (customCards.length === 0) return alert('Inga egna kort att exportera.');
+    exportCardsToFile(customCards);
   };
 
   const pages = packDeckIntoPages(deck);
@@ -247,41 +201,93 @@ export default function App() {
         }
       `}</style>
 
+      {/* Editor-modal */}
+      {editorOpen && (
+        <CardEditor
+          card={editingCard}
+          onSave={handleSaveCard}
+          onCancel={() => { setEditorOpen(false); setEditingCard(null); }}
+        />
+      )}
+
       {/* Användargränssnitt (Döljs vid utskrift) */}
       <div className="no-print max-w-6xl mx-auto p-6">
         <header className="flex justify-between items-center mb-8 border-b border-slate-300 pb-4">
           <div>
             <h1 className="text-2xl font-black text-slate-800">Minneskort Hemvärnet</h1>
-            <p className="text-slate-500 text-sm">Bygg och skriv ut dina minneskort. Stödjer vikbara och enkelsidiga format.</p>
+            <p className="text-slate-500 text-sm">Bygg och skriv ut dina minneskort.</p>
           </div>
-          <button
-            onClick={() => window.print()}
-            disabled={deck.length === 0}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-slate-300 text-white font-bold py-2 px-6 rounded-lg shadow-sm transition-colors"
-          >
-            Skriv ut A4-ark ({pages.length} sidor)
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleImport}
+              className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
+            >
+              Ladda upp
+            </button>
+            <button
+              onClick={handleExport}
+              className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
+            >
+              Ladda ner
+            </button>
+            <button
+              onClick={() => window.print()}
+              disabled={deck.length === 0}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-slate-300 text-white font-bold py-2 px-6 rounded-lg shadow-sm transition-colors"
+            >
+              Skriv ut ({pages.length} sidor)
+            </button>
+          </div>
         </header>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Vänster: Bibliotek */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <h2 className="text-lg font-bold mb-4 text-slate-700">1. Bibliotek</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold text-slate-700">1. Bibliotek</h2>
+              <button
+                onClick={() => { setEditingCard(null); setEditorOpen(true); }}
+                className="text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded-lg transition-colors"
+              >
+                + Nytt kort
+              </button>
+            </div>
             <div className="flex flex-col gap-3">
               {library.map((card) => (
                 <div key={card.id} className="flex justify-between items-center p-3 hover:bg-slate-50 border border-slate-100 rounded-lg transition-colors">
                   <div>
-                    <div className="font-bold text-slate-800">{card.title}</div>
+                    <div className="font-bold text-slate-800">
+                      {card.title}
+                      {isCustom(card) && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-semibold">Eget</span>}
+                    </div>
                     <div className="text-xs font-semibold text-slate-500">
-                      <span className="text-blue-600">{card.category}</span> • {card.layout === 'foldable' ? 'Vikbart (2 paneler)' : 'Light (1 panel)'}
+                      <span className="text-blue-600">{card.category}</span>
                     </div>
                   </div>
-                  <button
-                    onClick={() => addToDeck(card)}
-                    className="text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-1 px-3 rounded"
-                  >
-                    + Lägg till
-                  </button>
+                  <div className="flex items-center gap-1">
+                    {isCustom(card) && (
+                      <>
+                        <button
+                          onClick={() => handleEditCard(card)}
+                          className="text-xs text-slate-400 hover:text-blue-600 font-semibold py-1 px-2"
+                        >
+                          Redigera
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCard(card)}
+                          className="text-xs text-slate-400 hover:text-red-600 font-semibold py-1 px-2"
+                        >
+                          Ta bort
+                        </button>
+                      </>
+                    )}
+                    <button
+                      onClick={() => addToDeck(card)}
+                      className="text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-1 px-3 rounded"
+                    >
+                      + Lägg till
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -301,7 +307,6 @@ export default function App() {
                     <div className="flex items-center gap-3">
                       <div className="text-slate-400 font-mono text-xs">{idx + 1}.</div>
                       <div className="font-bold text-slate-800">{card.title}</div>
-                      <div className="text-[10px] bg-slate-200 px-1 rounded text-slate-600 uppercase tracking-wider">{card.layout}</div>
                     </div>
                     <button
                       onClick={() => removeFromDeck(idx)}
@@ -327,7 +332,7 @@ export default function App() {
           </div>
         )}
         {pages.map((page, idx) => (
-          <PrintPage key={idx} rows={page.rows} />
+          <PrintPage key={idx} rows={page} />
         ))}
       </div>
 

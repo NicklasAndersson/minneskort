@@ -1,7 +1,7 @@
 export default {
   id: "repetera",
   category: "Samband",
-  layout: "light",
+  layout: "foldable",
   title: "REPETERA",
   subtitle: "Sambandsrutin vid anrop",
   content: {

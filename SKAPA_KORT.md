@@ -1,11 +1,13 @@
 # Hur man skapar ett nytt kort
 
-Här är en kort instruktion för hur du skapar och lägger till ett nytt kort i appen:
+Här är en kort instruktion för hur du skapar och lägger till ett nytt kort i appen.
 
 ### 1. Skapa en ny fil för kortet
+
 Skapa en ny JavaScript-fil i mappen `src/cards/`, till exempel `mitt-nya-kort.js`.
 
 ### 2. Definiera kortets innehåll
+
 Klistra in och anpassa följande struktur i din nya fil. Det finns olika typer av innehåll (`freetext`, `mnemonic` eller `image`).
 
 **Exempel för ett textkort (`freetext`):**
@@ -13,7 +15,7 @@ Klistra in och anpassa följande struktur i din nya fil. Det finns olika typer a
 export default {
   id: "mitt-nya-kort",
   category: "Min Kategori",
-  layout: "foldable", // eller "light"
+  layout: "foldable",
   title: "Kortets Titel",
   subtitle: "En kort undertext",
   content: {
@@ -37,11 +39,13 @@ export default {
       { letter: "R", title: "Roligt", description: "Beskrivning av R" },
       { letter: "A", title: "Alltid", description: "Beskrivning av A" },
     ],
+    notes: "Valfri fritext som visas under listan på baksidan.",
   },
 };
 ```
 
 ### 3. Registrera kortet i appen
+
 Öppna filen `src/cards/index.js` för att importera och lägga till ditt nya kort i listan.
 
 1. **Importera** filen högst upp:
@@ -50,7 +54,22 @@ export default {
    ```
 2. **Lägg till** variabeln i arrayen `initialCards`:
    ```javascript
-   const initialCards = [lCabcde, andning, hgrVerkan, repetera, sar, mittNyaKort];
+   const initialCards = [..., mittNyaKort];
    ```
 
 När du sparar filerna kommer ditt nya kort automatiskt att dyka upp i appen!
+
+### Fält-referens
+
+| Fält | Krävs | Beskrivning |
+|------|-------|-------------|
+| `id` | Ja | Unikt ID (används som nyckel) |
+| `category` | Ja | Kategori som visas i biblioteket |
+| `layout` | Ja | Alltid `"foldable"` |
+| `title` | Ja | Titel på framsidan |
+| `subtitle` | Nej | Undertext på framsidan |
+| `content.type` | Ja | `"mnemonic"`, `"freetext"` eller `"image"` |
+| `content.items` | Mnemonic | Array med `{ letter, title, description }` |
+| `content.text` | Freetext/Image | Markdown-text |
+| `content.imageUrl` | Image | URL till bild |
+| `content.notes` | Nej | Fritext under items-listan på baksidan |

@@ -6,8 +6,9 @@ Webbapplikation för att skapa och skriva ut minneskort/fusklappar anpassade fö
 
 - **Bibliotek**: Bläddra bland tillgängliga minneskort (ramsor, fritext, bilder).
 - **Kortlek-byggare**: Välj och köa kort inför utskrift.
-- **Utskriftsvy**: A4-layout med 2 kort per sida (4 paneler). Stödjer vikbara kort (framsida/baksida) och enkelsidiga "light"-kort.
+- **Utskriftsvy**: A4-layout med 2 vikbara kort per sida (framsida + baksida). Marginaler anpassade för utskrift.
 - **Korttyper**: `mnemonic` (ramsa), `freetext` (fritext med markdown), `image` (bild med text).
+- **Notes-fält**: Valfri fritext under items-listan på baksidan via `content.notes`.
 
 ## Starta projektet
 
@@ -24,25 +25,23 @@ npm run build
 
 ## Kortformat
 
-Kortdata definieras i `public/cards.json` enligt följande schema:
+Varje kort definieras som en egen JS-fil i `src/cards/`. Se [SKAPA_KORT.md](SKAPA_KORT.md) för steg-för-steg-instruktioner.
 
-```json
-[
-  {
-    "id": "unikt-id",
-    "category": "Kategori",
-    "front": {
-      "title": "Kortets titel",
-      "subtitle": "Kort beskrivning"
-    },
-    "back": {
-      "type": "mnemonic | freetext | image",
-      "items": [],
-      "text": "",
-      "imageUrl": ""
-    }
-  }
-]
+```js
+export default {
+  id: "unikt-id",
+  category: "Kategori",
+  layout: "foldable",
+  title: "TITEL",
+  subtitle: "Kort beskrivning",
+  content: {
+    type: "mnemonic",       // mnemonic | freetext | image
+    items: [
+      { letter: "A", title: "Alfa", description: "Beskrivning" },
+    ],
+    notes: "Valfri fritext under listan på baksidan.",
+  },
+};
 ```
 
 ## Tekniker

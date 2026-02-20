@@ -1,7 +1,7 @@
 export default {
   id: "sar",
   category: "Skjutteknik",
-  layout: "light",
+  layout: "foldable",
   title: "SAR",
   subtitle: "Skjutteknikens grunder",
   content: {
