@@ -1,0 +1,84 @@
+[
+  {
+    "id": "l-cabcde",
+    "category": "Sjukvård",
+    "front": {
+      "title": "L-CABCDE",
+      "subtitle": "Systematisk undersökning och behandling av livshotande skador."
+    },
+    "back": {
+      "type": "mnemonic",
+      "items": [
+        {"letter": "L", "title": "Livsfarligt läge", "description": "Bedöm säkerheten. Behöver den skadade flyttas? Finns beskjutning eller brandrisk?"},
+        {"letter": "C", "title": "Catastrophic hemorrhage", "description": "Stoppa stora, sprutande blödningar omedelbart med tourniquet."},
+        {"letter": "A", "title": "Airways", "description": "Säkra fria luftvägar. Rensa munnen, använd stabilt sidoläge."},
+        {"letter": "B", "title": "Breathing", "description": "Kontrollera andningen. Täck eventuella öppna sår i bröstkorgen."},
+        {"letter": "C", "title": "Circulation", "description": "Kontrollera puls och chocktecken. Stoppa mindre blödningar. Förebygg hypotermi."},
+        {"letter": "D", "title": "Disability", "description": "Kontrollera medvetande (vaken, svarar på tilltal/smärta)."},
+        {"letter": "E", "title": "Exposure/Environment", "description": "Helkroppsundersökning. Skydda mot markkyla och väder."}
+      ]
+    }
+  },
+  {
+    "id": "4x4-andning",
+    "category": "Stresshantering",
+    "front": {
+      "title": "4x4-Andning",
+      "subtitle": "För att sänka pulsen och återfå fokus under extrem stress."
+    },
+    "back": {
+      "type": "freetext",
+      "text": "1. **Andas in** genom näsan i 4 sekunder.\n2. **Håll andan** i 4 sekunder.\n3. **Andas ut** genom munnen i 4 sekunder.\n4. **Vänta** i 4 sekunder innan nästa inandning.\n\n*Upprepa tills du känner att pulsen gått ner och du återfått tunnelseendet.*"
+    }
+  },
+  {
+    "id": "hgr-verkan",
+    "category": "Vapenverkan",
+    "front": {
+      "title": "Spränghandgranat m/56",
+      "subtitle": "Verkan och skyddsavstånd"
+    },
+    "back": {
+      "type": "image",
+      "imageUrl": "assets/images/hgr56_verkan.png",
+      "text": "Splitterverkan är god upp till ca 5 meter, men enstaka splitter kan slungas iväg upp emot 50 meter. Ta alltid fullt skydd."
+    }
+  },
+  {
+    "id": "repetera",
+    "category": "Samband",
+    "front": {
+      "title": "REPETERA",
+      "subtitle": "Sambandsrutin vid anrop"
+    },
+    "back": {
+      "type": "mnemonic",
+      "items": [
+        {"letter": "R", "title": "Riktning", "description": "Vem anropar du?"},
+        {"letter": "E", "title": "Enhet", "description": "Vem är du?"},
+        {"letter": "P", "title": "Plats", "description": "Var är du?"},
+        {"letter": "E", "title": "Eget läge", "description": "Vad gör du just nu?"},
+        {"letter": "T", "title": "Tid", "description": "När skedde händelsen?"},
+        {"letter": "E", "title": "Eventuellt", "description": "Övrig viktig info."},
+        {"letter": "R", "title": "Repetera", "description": "Repetera viktiga siffror/koordinater."},
+        {"letter": "A", "title": "Avsluta", "description": "\"Kom\" eller \"Slut\"."}
+      ]
+    }
+  },
+  {
+    "id": "sar",
+    "category": "Skjutteknik",
+    "front": {
+      "title": "SAR",
+      "subtitle": "Skjutteknikens grunder"
+    },
+    "back": {
+      "type": "mnemonic",
+      "items": [
+        {"letter": "S", "title": "Siktbild", "description": "Centrera siktet rätt i målet."},
+        {"letter": "A", "title": "Avfyrning", "description": "Krama avtryckaren jämnt utan att rycka."},
+        {"letter": "R", "title": "Rekylkontroll", "description": "Håll vapnet stadigt för snabba uppföljande skott."}
+      ]
+    }
+  }
+]
