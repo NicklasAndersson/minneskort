@@ -16,5 +16,6 @@ export default {
       { letter: "R", title: "Repetera", description: "Repetera viktiga siffror/koordinater." },
       { letter: "A", title: "Avsluta", description: '"Kom" eller "Slut".' },
     ],
+    notes: "Vid sambandsproblem, övergå till bokstavering.",
   },
 };

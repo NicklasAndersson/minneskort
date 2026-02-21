@@ -8,5 +8,6 @@ export default {
     type: "image",
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Explosion_icon.svg/200px-Explosion_icon.svg.png",
     text: "**Splitterverkan** är god upp till ca 5 meter, men enstaka splitter kan slungas iväg upp emot 50 meter.\n\nTa alltid fullt skydd vid kast.",
+    notes: "Säkrat avstånd i fredstid är 300 meter.",
   },
 };
