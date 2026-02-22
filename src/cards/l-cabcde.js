@@ -15,6 +15,5 @@ export default {
       { letter: "D", title: "Disability", description: "Kontrollera medvetande (vaken, svarar på tilltal/smärta)." },
       { letter: "E", title: "Exposure/Environment", description: "Helkroppsundersökning. Skydda mot markkyla och väder." },
     ],
-    notes: "Följ TCCC-protokoll.",
   },
 };
