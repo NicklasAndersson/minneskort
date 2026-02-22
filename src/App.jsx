@@ -281,17 +281,15 @@ export default function App() {
                 + Nytt kort
               </button>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
               {library.map((card) => (
-                <div key={card.id} className="flex justify-between items-center p-3 hover:bg-slate-50 border border-slate-100 rounded-lg transition-colors">
-                  <div>
-                    <div className="font-bold text-slate-800">
+                <div key={card.id} className="flex justify-between items-center py-1.5 px-2 hover:bg-slate-50 border border-slate-100 rounded transition-colors">
+                  <div className="min-w-0">
+                    <span className="font-bold text-sm text-slate-800">
                       {card.title}
-                      {isCustom(card) && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-semibold">Eget</span>}
-                    </div>
-                    <div className="text-xs font-semibold text-slate-500">
-                      <span className="text-blue-600">{card.category}</span>
-                    </div>
+                      {isCustom(card) && <span className="ml-1.5 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-semibold">Eget</span>}
+                    </span>
+                    <span className="ml-2 text-xs text-blue-600 font-semibold">{card.category}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     {isCustom(card) && (

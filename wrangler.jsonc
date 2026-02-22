@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "minneskort",
+  "compatibility_date": "2026-02-22",
+  "pages": {
+    "build_command": "npm run build",
+    "build_output_dir": "dist"
+  }
+}

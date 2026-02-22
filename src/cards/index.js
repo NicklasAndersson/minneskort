@@ -1,29 +1,37 @@
-import andning from "./4x4-andning.js";
-import repetera from "./repetera.js";
-import sar from "./sar.js";
-import obslosa from "./obslosa.js";
+import femPunktsorder from "./5-punktsordern.js";
+import sjuS from "./7s.js";
+import atmist from "./atmist.js";
+import erobusare from "./erobusare.js";
+import fardigaTillStrid from "./fardiga-till-strid.js";
 import forsRapport from "./fors-rapport.js";
+import lCabcde from "./l-abcede.js";
+import march from "./march.js";
+import methane from "./methane.js";
+import obk from "./obk.js";
+import obo from "./obo.js";
+import obslosa from "./obslosa.js";
+import osk from "./osk.js";
 import pedars from "./pedars.js";
 import rassoika from "./rassoika.js";
-import methane from "./methane.js";
-import atmist from "./atmist.js";
-import march from "./march.js";
-import primarySurvey from "./l-abcede.js";
-import sjuS from "./7s.js";
+import repetera from "./repetera.js";
 
 const initialCards = [
-  andning,
+  femPunktsorder,
   sjuS,
-  repetera,
-  sar,
-  obslosa,
+  atmist,
+  erobusare,
+  fardigaTillStrid,
   forsRapport,
+  lCabcde,
+  march,
+  methane,
+  obk,
+  obo,
+  obslosa,
+  osk,
   pedars,
   rassoika,
-  methane,
-  atmist,
-  march,
-  primarySurvey,
+  repetera,
 ];
 
 export default initialCards;

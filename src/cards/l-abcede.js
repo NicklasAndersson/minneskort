@@ -2,7 +2,8 @@ export default {
   id: "primary-survey-fomedc",
   category: "Sjukvård",
   layout: "foldable",
-  title: "Taktiskt omhändertagande",
+  title: "C-ABCDE",
+  subtitle: "Taktiskt omhändertagande",
   content: {
     type: "mnemonic",
     items: [

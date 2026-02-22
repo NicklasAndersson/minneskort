@@ -46,16 +46,28 @@ export default {
 
 ### 3. Registrera kortet i appen
 
-Öppna filen `src/cards/index.js` för att importera och lägga till ditt nya kort i listan.
+> **⚠️ VIKTIGT – detta steg missas ofta!**
+> Kortet syns INTE i appen förrän det är importerat och tillagt i `src/cards/index.js`.
+> Utan detta steg finns kortfilen men den laddas aldrig.
 
-1. **Importera** filen högst upp:
+Öppna filen `src/cards/index.js` och gör **båda** dessa ändringar:
+
+1. **Importera** filen – lägg till en import-rad högst upp bland de andra importerna:
    ```javascript
    import mittNyaKort from "./mitt-nya-kort.js";
    ```
-2. **Lägg till** variabeln i arrayen `initialCards`:
+2. **Lägg till variabeln i arrayen `initialCards`** – lägg till den sist i listan:
    ```javascript
-   const initialCards = [..., mittNyaKort];
+   const initialCards = [
+     // ...befintliga kort
+     mittNyaKort,   // <-- lägg till här
+   ];
    ```
+
+**Checklista innan du är klar:**
+- [ ] Ny fil skapad i `src/cards/`
+- [ ] Import-rad tillagd i `src/cards/index.js`
+- [ ] Variabeln tillagd i `initialCards`-arrayen i `src/cards/index.js`
 
 När du sparar filerna kommer ditt nya kort automatiskt att dyka upp i appen!
 
