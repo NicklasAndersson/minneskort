@@ -108,7 +108,7 @@ const FoldableBack = ({ card }) => (
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
     {card.content.type === 'image' && <ImageContent data={card.content} />}
     {card.content.notes && (
-      <div className="mt-auto pt-3 border-t border-slate-200">
+      <div className="mt-auto pt-1.5 border-t border-slate-200">
         <FreeText text={card.content.notes} />
       </div>
     )}
@@ -162,8 +162,12 @@ export default function App() {
     saveCustomCards(customCards);
   }, [customCards]);
 
+  const [addedCardId, setAddedCardId] = useState(null);
+
   const addToDeck = (card) => {
     setDeck([...deck, card]);
+    setAddedCardId(card.id);
+    setTimeout(() => setAddedCardId(null), 1200);
   };
 
   const removeFromDeck = (indexToRemove) => {
@@ -310,9 +314,13 @@ export default function App() {
                     )}
                     <button
                       onClick={() => addToDeck(card)}
-                      className="text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-1 px-3 rounded"
+                      className={`text-sm font-semibold py-1 px-3 rounded transition-all duration-300 ${
+                        addedCardId === card.id
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-blue-100 hover:bg-blue-200 text-blue-700'
+                      }`}
                     >
-                      + Lägg till
+                      {addedCardId === card.id ? '✓ Tillagd!' : '+ Lägg till'}
                     </button>
                   </div>
                 </div>
