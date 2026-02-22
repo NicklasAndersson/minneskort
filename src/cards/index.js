@@ -9,9 +9,11 @@ import methane from "./methane.js";
 import atmist from "./atmist.js";
 import march from "./march.js";
 import primarySurvey from "./l-abcede.js";
+import sjuS from "./7s.js";
 
 const initialCards = [
   andning,
+  sjuS,
   repetera,
   sar,
   obslosa,
