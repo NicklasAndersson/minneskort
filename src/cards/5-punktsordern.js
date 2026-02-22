@@ -3,40 +3,41 @@ export default {
   category: "Ledning",
   layout: "foldable",
   title: "5-PUNKTSORDERN",
-  subtitle: "Generell ordermall",
+  subtitle: "OUGUL - Fullständig order",
   content: {
     type: "mnemonic",
     items: [
       {
-        letter: "1",
+        letter: "O",
         title: "Orientering",
         description:
-          "Fienden\nEgna förband\nCivilläget\nÖverordnad chefs uppgift",
+          "**Fienden:** Styrka, gruppering, rörlighet och troligt agerande.\n**Egna förband:** Högre chefs uppgift, sidoförband (grannar) och understöd.\n**Miljö:** Terräng, väder, mörker och civila aktörer/tredje part.",
       },
       {
-        letter: "2",
-        title: "Uppdrag",
+        letter: "U",
+        title: "Uppgift",
         description:
-          "Enhetens specifika uppgift\nSyftet med uppgiften",
+          "**Uppgift & Syfte:** Ett tydligt och kortfattat uttalande om vad enheten ska göra och varför (t.ex. \"Plutonen ska ta höjd 123 i syfte att...\").",
       },
       {
-        letter: "3",
+        letter: "G",
         title: "Genomförande",
         description:
-          "Chefens beslut (stridsidé)\nOrder/kommandon till underställda\nSamordning\nInsatsregler",
+          "**Beslut/Stridsidé:** Hur uppgiften ska lösas i stort (Inledningsvis, Därefter, Slutligen).\n**Uppgifter till underställda:** Detaljerade uppgifter till varje grupp/soldat.\n**Samordning:** Tider, gränser, eldöppnande och insatsregler (ROE).",
       },
       {
-        letter: "4",
-        title: "Logistik",
+        letter: "U",
+        title: "Underhåll",
         description:
-          "Underhållstjänst\nAmmunition\nHälso- och sjukvård",
+          "**Försörjning:** Ammunition, mat, vatten och drivmedel.\n**Sjukvård:** Var sjukvårdsplatsen finns, PEDARS och avtransport.\n**Materiel:** Bärgning och reparation.",
       },
       {
-        letter: "5",
+        letter: "L",
         title: "Ledning",
         description:
-          "Ledningsplats (var chefen finns)\nSambandsbestämmelser\nRapporteringskrav",
+          "**Ledningsplats:** Var chefen (och stf chefen) befinner sig.\n**Samband:** Frekvenser, anropssignaler, koder, larm och sambandskontroll.",
       },
     ],
+    notes: "*Den 5-punktiga ordermallen kallas även för SMEAC (internationellt). Används vid utförlig ordergivning. Vid tidsbrist utnyttjas den förkortade mallen OBO.*"
   },
 };
