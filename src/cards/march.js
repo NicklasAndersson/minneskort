@@ -3,7 +3,6 @@ export default {
   category: "Sjukvård",
   layout: "foldable",
   title: "MARCH",
-  subtitle: "TCCC - Prioritering vid traumavård",
   content: {
     type: "mnemonic",
     items: [
@@ -13,6 +12,7 @@ export default {
       { letter: "C", title: "Circulation", description: "Förebygg chock. Stoppa övriga blödningar, överväg bäckenbälte." },
       { letter: "H", title: "Head/Hypothermia", description: "Förebygg nedkylning (filt, värmetäcke). Bedöm skallskada." },
     ],
-    notes: "MARCH är den internationella standarden enligt TCCC (Tactical Combat Casualty Care) för att prioritera åtgärder vid trauma.",
+    notes:
+      "PAWS är en påbyggnad för fortsatt vård:\nPain: Smärtlindring.\nAntibiotics: Ge antibiotika.\nWounds: Behandla övriga sår.\nSplinting: Stabilisera frakturer.\n\nM",
   },
 };

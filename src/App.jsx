@@ -72,7 +72,11 @@ const FoldableFront = ({ card }) => (
       {card.subtitle && <p className="text-sm text-slate-600 italic px-2">{card.subtitle}</p>}
     </div>
     {card.content.type === 'mnemonic' && <MnemonicFront items={card.content.items} />}
-    <div className="absolute bottom-4 text-[10px] text-slate-400">Vik på mitten →</div>
+    {card.content.frontNotes && (
+      <div className="mt-auto pt-3 px-6 w-full text-left">
+        <FreeText text={card.content.frontNotes} />
+      </div>
+    )}
   </div>
 );
 
