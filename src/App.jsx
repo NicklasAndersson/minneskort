@@ -47,7 +47,7 @@ const MnemonicBack = ({ items }) => (
     {items.map((item, idx) => (
       <div key={idx} className="flex gap-2 text-[12px] leading-tight">
         <div className="font-bold text-base text-slate-800 w-4 flex-shrink-0">{item.letter}</div>
-        <div className="text-slate-600 mt-[2px]">{item.description}</div>
+        <div className="text-slate-600 mt-[2px]" dangerouslySetInnerHTML={{ __html: parseMarkdown(item.description) }} />
       </div>
     ))}
   </div>
