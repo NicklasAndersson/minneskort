@@ -8,6 +8,7 @@ import pedars from "./pedars.js";
 import rassoika from "./rassoika.js";
 import methane from "./methane.js";
 import atmist from "./atmist.js";
+import march from "./march.js";
 
 const initialCards = [
   lCabcde,
@@ -20,6 +21,7 @@ const initialCards = [
   rassoika,
   methane,
   atmist,
+  march,
 ];
 
 export default initialCards;
