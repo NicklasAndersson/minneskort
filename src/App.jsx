@@ -43,11 +43,11 @@ const MnemonicFront = ({ items }) => (
 
 // Ramsa på Baksidan (endast Bokstav + Beskrivning)
 const MnemonicBack = ({ items }) => (
-  <div className="flex flex-col gap-2 mt-2">
+  <div className="flex flex-col gap-1.5 mt-1">
     {items.map((item, idx) => (
-      <div key={idx} className="flex gap-2 text-[12px] leading-tight">
-        <div className="font-bold text-base text-slate-800 w-4 flex-shrink-0">{item.letter}</div>
-        <div className="text-slate-600 mt-[2px]" dangerouslySetInnerHTML={{ __html: parseMarkdown(item.description) }} />
+      <div key={idx} className="flex gap-2 text-[11px] leading-tight">
+        <div className="font-bold text-sm text-slate-800 w-4 flex-shrink-0">{item.letter}</div>
+        <div className="text-slate-600" dangerouslySetInnerHTML={{ __html: parseMarkdown(item.description) }} />
       </div>
     ))}
   </div>
@@ -108,9 +108,9 @@ const FoldableBack = ({ card }) => (
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
     {card.content.type === 'image' && <ImageContent data={card.content} />}
     {card.content.notes && (
-      <div className="mt-auto pt-1.5 border-t border-slate-200">
-        <FreeText text={card.content.notes} />
-      </div>
+      <div className="mt-auto pt-1 border-t border-slate-200 text-[13px] text-slate-700 leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}
+      />
     )}
     <div className={card.content.notes ? '' : 'mt-auto'}>
       <SourcesList sources={card.content.sources} />
