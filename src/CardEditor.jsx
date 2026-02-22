@@ -51,6 +51,8 @@ export function importCardsFromFile() {
 
 const emptyMnemonicItem = () => ({ letter: '', title: '', description: '' });
 
+const emptySource = () => ({ title: '', url: '' });
+
 const emptyCard = () => ({
   id: '',
   category: '',
@@ -61,6 +63,7 @@ const emptyCard = () => ({
     type: 'mnemonic',
     items: [emptyMnemonicItem()],
     notes: '',
+    sources: [],
   },
 });
 
@@ -87,13 +90,39 @@ export default function CardEditor({ card, onSave, onCancel }) {
   const setContentType = (type) => {
     setForm((prev) => {
       const next = JSON.parse(JSON.stringify(prev));
+      const sources = next.content.sources || [];
       if (type === 'mnemonic') {
-        next.content = { type, items: [emptyMnemonicItem()], notes: '' };
+        next.content = { type, items: [emptyMnemonicItem()], notes: '', sources };
       } else if (type === 'freetext') {
-        next.content = { type, text: '', notes: '' };
+        next.content = { type, text: '', notes: '', sources };
       } else if (type === 'image') {
-        next.content = { type, imageUrl: '', text: '', notes: '' };
+        next.content = { type, imageUrl: '', text: '', notes: '', sources };
       }
+      return next;
+    });
+  };
+
+  const addSource = () => {
+    setForm((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      if (!next.content.sources) next.content.sources = [];
+      next.content.sources.push(emptySource());
+      return next;
+    });
+  };
+
+  const removeSource = (idx) => {
+    setForm((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      next.content.sources.splice(idx, 1);
+      return next;
+    });
+  };
+
+  const setSource = (idx, field, value) => {
+    setForm((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      next.content.sources[idx][field] = value;
       return next;
     });
   };
@@ -259,6 +288,36 @@ export default function CardEditor({ card, onSave, onCancel }) {
               onChange={(e) => set('content.notes', e.target.value)}
               placeholder="Extra text under huvudinnehållet på baksidan..."
             />
+          </div>
+
+          <div>
+            <label className={labelClass}>Källor (valfritt)</label>
+            <div className="flex flex-col gap-2">
+              {(form.content.sources || []).map((src, idx) => (
+                <div key={idx} className="flex gap-2 items-start">
+                  <input
+                    className="w-40 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    value={src.title}
+                    onChange={(e) => setSource(idx, 'title', e.target.value)}
+                    placeholder="Titel"
+                  />
+                  <input
+                    className="flex-1 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    value={src.url}
+                    onChange={(e) => setSource(idx, 'url', e.target.value)}
+                    placeholder="https://..."
+                  />
+                  <button
+                    onClick={() => removeSource(idx)}
+                    className="text-red-400 hover:text-red-600 text-sm font-bold px-1"
+                    title="Ta bort källa"
+                  >✕</button>
+                </div>
+              ))}
+            </div>
+            <button onClick={addSource} className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold">
+              + Lägg till källa
+            </button>
           </div>
         </div>
 

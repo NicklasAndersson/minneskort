@@ -55,10 +55,11 @@ const MnemonicBack = ({ items }) => (
 
 // 3. LAYOUT-KOMPONENTER (RADER & PANELER)
 
-// Streckad triangel i övre vänstra hörnet
+// Streckad triangel i övre vänstra hörnet (klipp-flik)
 const CornerLine = () => (
   <svg className="absolute top-0 left-0 z-10" width="15mm" height="15mm" viewBox="0 0 40 40">
-    <polyline points="0,40 0,0 40,0" fill="none" stroke="rgb(148 163 184)" strokeWidth="1" strokeDasharray="3,3" />
+    <polygon points="0,0 40,0 0,40" fill="white" stroke="none" />
+    <line x1="40" y1="0" x2="0" y2="40" stroke="rgb(148 163 184)" strokeWidth="1" strokeDasharray="3,3" />
   </svg>
 );
 
@@ -75,6 +76,27 @@ const FoldableFront = ({ card }) => (
   </div>
 );
 
+// Källförteckning
+const SourcesList = ({ sources }) => {
+  if (!sources || sources.length === 0) return null;
+  return (
+    <div className="mt-2 pt-2 border-t border-slate-100">
+      <div className="text-[8px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Källor</div>
+      <ul className="list-none p-0 m-0 flex flex-col gap-0.5">
+        {sources.map((src, idx) => (
+          <li key={idx} className="text-[8px] text-slate-400 leading-tight truncate">
+            {src.url ? (
+              <a href={src.url} className="underline text-slate-400 hover:text-slate-600">{src.title || src.url}</a>
+            ) : (
+              <span>{src.title}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 // Baksidan av ett vikbart kort
 const FoldableBack = ({ card }) => (
   <div className="w-[105mm] h-full p-6 flex flex-col relative overflow-hidden">
@@ -86,6 +108,9 @@ const FoldableBack = ({ card }) => (
         <FreeText text={card.content.notes} />
       </div>
     )}
+    <div className={card.content.notes ? '' : 'mt-auto'}>
+      <SourcesList sources={card.content.sources} />
+    </div>
   </div>
 );
 

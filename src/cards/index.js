@@ -7,6 +7,7 @@ import forsRapport from "./fors-rapport.js";
 import pedars from "./pedars.js";
 import rassoika from "./rassoika.js";
 import methane from "./methane.js";
+import atmist from "./atmist.js";
 
 const initialCards = [
   lCabcde,
@@ -18,6 +19,7 @@ const initialCards = [
   pedars,
   rassoika,
   methane,
+  atmist,
 ];
 
 export default initialCards;
