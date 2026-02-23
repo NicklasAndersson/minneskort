@@ -15,8 +15,8 @@ export default {
       { letter: "N", title: "Number of casualties", description: "Antal nödställda, typ av skador." },
       { letter: "E", title: "Expected response", description: "Vilken hjälp behövs." },
     ],
+    sources: [
+      { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 11", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
+    ],
   },
-  sources: [
-    { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 11", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
-  ],
 };

@@ -39,9 +39,9 @@ export default {
       }
     ],
     frontNotes: "**Sållningstriage:**\n1. Överblicka platsen. 2. Få undan gående.\n**Första varvet:** Åtgärda **C** och A på samtliga skadade.\n**Andra varvet:** Prioritera samtliga, märk med triagekort, rapportera antal/kategori.",
-    notes: "**Åtgärder: Klar för avtransport:**\n- Dokumentera tid på TQ\n- Patron ur\n- Avlägsna ammunition & sprängeffekter\n- Skriv AT-MIST"
+    notes: "**Åtgärder: Klar för avtransport:**\n- Dokumentera tid på TQ\n- Patron ur\n- Avlägsna ammunition & sprängeffekter\n- Skriv AT-MIST",
+    sources: [
+      { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 7–8", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
+    ],
   },
-  sources: [
-    { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 7–8", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
-  ],
 };

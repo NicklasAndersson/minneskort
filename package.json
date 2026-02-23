@@ -8,8 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && wrangler pages deploy dist",
-    "test": "node test/card-overflow.test.mjs"
+    "deploy": "npm test && npm run build && wrangler pages deploy dist",
+    "test": "node test/card-schema.test.mjs && node test/card-overflow.test.mjs",
+    "test:schema": "node test/card-schema.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

@@ -17,9 +17,9 @@ export default {
     ],
     notes:
       "Ett åttonde S, 'Sedan' (vad egen enhet gör härnäst), kan läggas till vid behov.",
+    sources: [
+      { title: "SoldF 2001" },
+      { title: "Hemvärnet – Spaningsrapport 7S", url: "https://hemvarn.wordpress.com/2020/03/13/15-spaningsrapport-7s-och-dess-8-punkter/" },
+    ],
   },
-  sources: [
-    { title: "SoldF 2001" },
-    { title: "Hemvärnet – Spaningsrapport 7S", url: "https://hemvarn.wordpress.com/2020/03/13/15-spaningsrapport-7s-och-dess-8-punkter/" },
-  ],
 };

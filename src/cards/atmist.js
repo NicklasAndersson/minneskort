@@ -15,8 +15,8 @@ export default {
       { letter: "T", title: "Treatment", description: "Given behandling (Tourniquet, läkemedel, förband)." },
     ],
     notes: "Namn på omhändertagaren kan också inkluderas i rapporten",
+    sources: [
+      { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 9", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
+    ],
   },
-  sources: [
-    { title: "Försvarsmaktens prehospitala behandlingsriktlinjer (2023), s. 9", url: "https://bibliotek.hv-sog.se/Sjukv%C3%A5rd/Fo%CC%88rsvarsmaktens%20prehospitala%20behandlingsriktlinjer%202023.pdf" },
-  ],
 };
