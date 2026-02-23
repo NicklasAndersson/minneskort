@@ -2,7 +2,7 @@ export default {
   id: "5-punktsordern",
   category: "Ledning",
   layout: "foldable",
-  title: "5-PUNKTSORDERN",
+  title: "5-PUNKTSORDER",
   subtitle: "OUGUL - Fullständig order",
   content: {
     type: "mnemonic",

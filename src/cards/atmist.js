@@ -2,7 +2,7 @@ export default {
   id: "at-mist",
   category: "Sjukvård",
   layout: "foldable",
-  title: "ATMIST",
+  title: "AT-MIST",
   subtitle: "Rapport för överlämning av patient",
   content: {
     type: "mnemonic",
