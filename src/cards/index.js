@@ -2,6 +2,7 @@ import femPunktsorder from "./5-punktsordern.js";
 import sjuS from "./7s.js";
 import attaF from "./8f.js";
 import atmist from "./atmist.js";
+import eobusare from "./eobusare.js";
 import erobusare from "./erobusare.js";
 import fardigaTillStrid from "./fardiga-till-strid.js";
 import forsRapport from "./fors-rapport.js";
@@ -21,6 +22,7 @@ const initialCards = [
   sjuS,
   attaF,
   atmist,
+  eobusare,
   erobusare,
   fardigaTillStrid,
   forsRapport,
