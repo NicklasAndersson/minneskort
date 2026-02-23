@@ -48,6 +48,6 @@ export default {
         description: "Det måste finnas dolda och skyddade vägar bakåt eller åt sidan för att gruppen snabbt ska kunna byta ställning eller dra sig ur striden." 
       }
     ],
-    notes: "*Det är sällan en plats uppfyller alla åtta kriterier fullt ut. Chefen måste utvärdera terrängen och göra en avvägning baserat på uppgiften och hotbilden.*\n\n**3S – Enskild soldat vid ingående:**\n- **Skyl** – Dölj dig (maskering)\n- **Skydd** – Sök skydd mot eld\n- **Sök bättre eldställning** – Se alltid om det finns ett bättre läge i närheten"
+    frontNotes: "**3S** – Enskild soldat:\n**S**kyl\n**S**kydd\n **S**ök bättre eldställning"
   },
 };
