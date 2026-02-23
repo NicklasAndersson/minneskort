@@ -117,7 +117,7 @@ const FoldableBack = ({ card }) => (
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
     {card.content.type === 'image' && <ImageContent data={card.content} />}
     {card.content.notes && (
-      <div className="mt-auto pt-1 border-t border-slate-200 text-[13px] text-slate-700 leading-relaxed"
+      <div className="mt-auto pt-1 border-t border-slate-200 text-[11px] text-slate-700 leading-tight"
         dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}
       />
     )}
