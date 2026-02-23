@@ -16,6 +16,10 @@ export default {
       { letter: "S", title: "Sagesman", description: "Sagesman:Vem som gjort observationen." },
     ],
     notes:
-      "Enligt SoldF 2001. Ett åttonde S, 'Sedan' (vad egen enhet gör härnäst), kan läggas till vid behov.",
+      "Ett åttonde S, 'Sedan' (vad egen enhet gör härnäst), kan läggas till vid behov.",
   },
+  sources: [
+    { title: "SoldF 2001" },
+    { title: "Hemvärnet – Spaningsrapport 7S", url: "https://hemvarn.wordpress.com/2020/03/13/15-spaningsrapport-7s-och-dess-8-punkter/" },
+  ],
 };
