@@ -63,6 +63,14 @@ const CornerLine = () => (
   </svg>
 );
 
+// Streckad triangel i övre högra hörnet (klipp-flik, speglad för baksida)
+const CornerLineRight = () => (
+  <svg className="absolute top-0 right-0 z-10" width="15mm" height="15mm" viewBox="0 0 40 40">
+    <polygon points="40,0 0,0 40,40" fill="white" stroke="none" />
+    <line x1="0" y1="0" x2="40" y2="40" stroke="rgb(148 163 184)" strokeWidth="1" strokeDasharray="3,3" />
+  </svg>
+);
+
 // Framsidan av ett vikbart kort
 const FoldableFront = ({ card }) => (
   <div className="w-[105mm] h-full border-r border-dashed border-gray-400 p-6 flex flex-col items-center text-center relative overflow-hidden">
@@ -104,6 +112,7 @@ const SourcesList = ({ sources }) => {
 // Baksidan av ett vikbart kort
 const FoldableBack = ({ card }) => (
   <div className="w-[105mm] h-full p-6 flex flex-col relative overflow-hidden">
+    <CornerLineRight />
     {card.content.type === 'mnemonic' && <MnemonicBack items={card.content.items} />}
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
     {card.content.type === 'image' && <ImageContent data={card.content} />}

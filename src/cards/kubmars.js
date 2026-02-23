@@ -43,6 +43,6 @@ export default {
         description: "Fortlöpande arbete: Gräv värn, maskera, röj skottfält och rekognosera växelstridsställningar. Arbetet pågår så länge man är i ställningen." 
       }
     ],
-    notes: "**B**ev.omr., **S**ätt tillkalla chef, **Ö**ppnande av eld\n\n**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
+    notes: "**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
   },
 };

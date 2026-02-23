@@ -48,6 +48,9 @@ export default {
         description: "När ställningarna är utbyggda och alla förberedelser är klara anmäler gruppchefen 'Stridsberedd' till plutonchefen." 
       }
     ],
-    notes: "**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
+    notes: "**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd",
+    sources: [
+      { title: "Petri-bloggen: ESKAPERA, en nykomling i stridsställningen", url: "https://hemvarn.wordpress.com/2020/04/20/23-eskapera-en-nykomling-i-stridsstallningen/" }
+    ]
   },
 };
