@@ -4,9 +4,11 @@ import attaF from "./8f.js";
 import atmist from "./atmist.js";
 import eobusare from "./eobusare.js";
 import erobusare from "./erobusare.js";
+import eskapera from "./eskapera.js";
 import fardigaTillStrid from "./fardiga-till-strid.js";
 import forsRapport from "./fors-rapport.js";
-import lCabcde from "./l-abcede.js";
+import kubmars from "./kubmars.js";
+import lCabcde from "./c-abcde.js";
 import march from "./march.js";
 import methane from "./methane.js";
 import obk from "./obk.js";
@@ -24,8 +26,10 @@ const initialCards = [
   atmist,
   eobusare,
   erobusare,
+  eskapera,
   fardigaTillStrid,
   forsRapport,
+  kubmars,
   lCabcde,
   march,
   methane,

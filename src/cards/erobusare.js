@@ -17,6 +17,6 @@ export default {
       { letter: "R", title: "Rapport till Chef", description: "Gruppchefen anmäler till plutonchefen att ställningen är besatt och klar." },
       { letter: "E", title: "Eldställingar - förbättra", description: "Eldställningarna förbättras kontinuerligt (t.ex. skottfältsröjning, maskering, gräva)." },
     ],
-    notes: "**B**ev.omr., **S**ätt tillkalla chef,**Ö**ppnande av eld\n\n**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
+    notes: "**B**ev.omr., **S**ätt tillkalla chef, **Ö**ppnande av eld\n\n**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
   },
 };
