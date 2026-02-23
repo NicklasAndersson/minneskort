@@ -8,7 +8,7 @@ export default {
     type: "mnemonic",
     items: [
       { letter: "P", title: "Personal", description: "Antal skadade / Döda." },
-      { letter: "E", title: "Ersättning", description: "Typ av behov gällande t.ex materiel, mat motsv." },
+      { letter: "e", title: "Ersättning", description: "Typ av behov gällande t.ex materiel, mat motsv." },
       { letter: "D", title: "Drivmedel", description: "Tillgång i %." },
       { letter: "A", title: "Ammunition", description: "Behov av antal och typ." },
       { letter: "R", title: "Reparation", description: "Vad finns det för reparationsbehov?" },

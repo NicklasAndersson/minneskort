@@ -8,7 +8,7 @@ export default {
     type: "mnemonic",
     items: [
       { letter: "E", title: "Eldställning", description: "Gruppen intar och grovinriktar sina eldställningar. Chefen anvisar platser." },
-      { letter: "R", title: "Rapport", description: "Soldaterna rapporterar till gruppchefen när de är på plats och eldberedda." },
+      { letter: "R", title: "Rapport*", description: "Soldaterna rapporterar till gruppchefen när de är på plats och eldberedda.(*Valfritt tillägg)" },
       { letter: "O", title: "Observatör", description: "Observatör, utses omedelbart för att spana mot terrängen framåt medan övriga förbereder sig." },
       { letter: "B", title: "Bevakningsområde", description: "Chefen tilldelar bevakningsområden och skjutsektorer till soldaterna/stridsparen. BSÖ till observatör." },
       { letter: "U", title: "Utgångspunkter", description: "Utgångspunkter för målangivning (UPM) bestäms och pekas ut för gruppen." },

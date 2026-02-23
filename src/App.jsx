@@ -231,6 +231,7 @@ export default function App() {
           body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .no-print { display: none !important; }
           .print-page { page-break-after: always; }
+          .print-page:last-child { page-break-after: auto; }
         }
       `}</style>
 
