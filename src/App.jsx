@@ -112,8 +112,102 @@ const FoldableBack = ({ card }) => (
         dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}
       />
     )}
-    <div className={card.content.notes ? '' : 'mt-auto'}>
-      <SourcesList sources={card.content.sources} />
+  </div>
+);
+
+// Förhandsgranskningsmodal
+const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
+  <div className="fixed inset-0 bg-black/40 z-50 flex items-start justify-center overflow-y-auto p-6" onClick={onClose}>
+    <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl my-8" onClick={(e) => e.stopPropagation()}>
+      <div className="flex justify-between items-center p-5 border-b border-slate-200">
+        <div>
+          <h2 className="text-lg font-black text-slate-800">{card.title}</h2>
+          {card.subtitle && <p className="text-sm text-slate-500 italic">{card.subtitle}</p>}
+        </div>
+        <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-xl font-bold">✕</button>
+      </div>
+
+      {/* Skalad kortförhandsgranskning */}
+      <div className="p-5 flex justify-center">
+        <div className="border border-gray-300 rounded-lg overflow-hidden" style={{ width: '100%', maxWidth: '700px' }}>
+          <div className="flex" style={{ height: '360px' }}>
+            <div className="w-1/2 h-full border-r border-dashed border-gray-400 p-4 flex flex-col items-center text-center relative overflow-hidden">
+              <div className="mt-4">
+                <h1 className="text-2xl font-black text-slate-900 mb-1">{card.title}</h1>
+                {card.subtitle && <p className="text-xs text-slate-600 italic px-2">{card.subtitle}</p>}
+              </div>
+              {card.content.type === 'mnemonic' && (
+                <div className="flex flex-col gap-0.5 mt-4 text-left w-full px-4">
+                  {card.content.items.map((item, idx) => (
+                    <div key={idx} className="flex gap-2 text-sm">
+                      <span className="font-black text-slate-800 w-4">{item.letter}</span>
+                      <span className="text-slate-700 font-semibold">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {card.content.frontNotes && (
+                <div className="mt-auto pt-2 px-4 w-full text-left">
+                  <div className="text-[11px] text-slate-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.frontNotes) }} />
+                </div>
+              )}
+            </div>
+            <div className="w-1/2 h-full p-4 flex flex-col overflow-y-auto">
+              {card.content.type === 'mnemonic' && (
+                <div className="flex flex-col gap-1 mt-0.5">
+                  {card.content.items.map((item, idx) => (
+                    <div key={idx} className="flex gap-1.5 text-[10px] leading-tight">
+                      <div className="font-bold text-xs text-slate-800 w-3 flex-shrink-0">{item.letter}</div>
+                      <div className="text-slate-600" dangerouslySetInnerHTML={{ __html: parseMarkdown(item.description) }} />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
+              {card.content.type === 'image' && <ImageContent data={card.content} />}
+              {card.content.notes && (
+                <div className="mt-auto pt-1 border-t border-slate-200 text-[11px] text-slate-700 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Källor */}
+      {card.content.sources && card.content.sources.length > 0 && (
+        <div className="px-5 pb-3">
+          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Källor</div>
+          <ul className="list-none p-0 m-0 flex flex-col gap-0.5">
+            {card.content.sources.map((src, idx) => (
+              <li key={idx} className="text-xs text-slate-500 leading-tight">
+                {src.url ? (
+                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="underline text-blue-500 hover:text-blue-700">{src.title || src.url}</a>
+                ) : (
+                  <span>{src.title}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Knappar */}
+      <div className="flex justify-end gap-3 p-5 border-t border-slate-200">
+        <button
+          onClick={() => onCopy(card)}
+          className="px-4 py-2 text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+        >
+          Kopiera till nytt kort
+        </button>
+        <button
+          onClick={() => { onAddToDeck(card); onClose(); }}
+          className="px-5 py-2 text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition-colors"
+        >
+          + Lägg till i utskriftskö
+        </button>
+      </div>
     </div>
   </div>
 );
@@ -155,6 +249,8 @@ export default function App() {
   const [deck, setDeck] = useState([]);
   const [editorOpen, setEditorOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
+  const [previewCard, setPreviewCard] = useState(null);
+  const [editorInitialData, setEditorInitialData] = useState(null);
 
   const library = [...initialCards, ...customCards];
 
@@ -192,6 +288,17 @@ export default function App() {
 
   const handleEditCard = (card) => {
     setEditingCard(card);
+    setEditorInitialData(null);
+    setEditorOpen(true);
+  };
+
+  const handleCopyCard = (card) => {
+    const clone = JSON.parse(JSON.stringify(card));
+    clone.id = '';
+    clone.title = clone.title + ' (kopia)';
+    setEditingCard(null);
+    setEditorInitialData(clone);
+    setPreviewCard(null);
     setEditorOpen(true);
   };
 
@@ -235,12 +342,23 @@ export default function App() {
         }
       `}</style>
 
+      {/* Förhandsgranskning */}
+      {previewCard && (
+        <CardPreview
+          card={previewCard}
+          onClose={() => setPreviewCard(null)}
+          onCopy={handleCopyCard}
+          onAddToDeck={addToDeck}
+        />
+      )}
+
       {/* Editor-modal */}
       {editorOpen && (
         <CardEditor
           card={editingCard}
+          initialData={editorInitialData}
           onSave={handleSaveCard}
-          onCancel={() => { setEditorOpen(false); setEditingCard(null); }}
+          onCancel={() => { setEditorOpen(false); setEditingCard(null); setEditorInitialData(null); }}
         />
       )}
 
@@ -289,8 +407,8 @@ export default function App() {
             <div className="flex flex-col gap-1">
               {library.map((card) => (
                 <div key={card.id} className="flex justify-between items-center py-1.5 px-2 hover:bg-slate-50 border border-slate-100 rounded transition-colors">
-                  <div className="min-w-0">
-                    <span className="font-bold text-sm text-slate-800">
+                  <div className="min-w-0 cursor-pointer" onClick={() => setPreviewCard(card)}>
+                    <span className="font-bold text-sm text-slate-800 hover:text-blue-700 transition-colors">
                       {card.title}
                       {isCustom(card) && <span className="ml-1.5 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-semibold">Eget</span>}
                     </span>

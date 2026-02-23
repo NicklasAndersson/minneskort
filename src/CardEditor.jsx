@@ -70,9 +70,10 @@ const emptyCard = () => ({
 const inputClass = 'w-full border border-slate-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400';
 const labelClass = 'block text-xs font-bold text-slate-600 mb-1';
 
-export default function CardEditor({ card, onSave, onCancel }) {
+export default function CardEditor({ card, initialData, onSave, onCancel }) {
   const [form, setForm] = useState(() => {
     if (card) return JSON.parse(JSON.stringify(card));
+    if (initialData) return JSON.parse(JSON.stringify(initialData));
     return emptyCard();
   });
 

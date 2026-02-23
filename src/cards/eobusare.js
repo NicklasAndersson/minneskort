@@ -16,6 +16,9 @@ export default {
       { letter: "R", title: "Rapport till plutonchef", description: "Anmäl stridsberedd/uppgiftsberedd till plutonchefen. Rapportera am- och skadeläge." },
       { letter: "E", title: "Eldställningar – förbättra", description: "Förbättra eldställningarna kontinuerligt (skottfältsröjning, maskering, gräva). Avbryts aldrig." },
     ],
-    notes: "**B**ev.omr., **S**ätt tillkalla chef, **Ö**ppnande av eld\n\n**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
+    notes: "**B**ev.omr., **S**ätt tillkalla chef, **Ö**ppnande av eld\n\n**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd",
+    sources: [
+      { title: "Petri-bloggen: EOBUSARE, inte busenkelt", url: "https://hemvarn.wordpress.com/2020/03/30/19-eobusare-inte-busenkelt/" }
+    ]
   },
 };
