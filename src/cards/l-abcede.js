@@ -30,7 +30,7 @@ export default {
       { 
         letter: "D", 
         title: "Medvetandegrad", 
-        description: "GCS/AVPU. Pupiller (storlek/ljusreaktion). V: Vaken, P: Smärtstimuli, U: Reagerar ej." 
+        description: "GCS/AVPU. Pupiller (storlek/ljusreaktion). A – Alert: Vaken & orienterad, V – Voice: Reagerar på tilltal, P – Pain: Reagerar på smärta, U – Unresponsive: Ingen reaktion." 
       },
       { 
         letter: "E", 
