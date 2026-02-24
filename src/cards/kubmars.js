@@ -43,9 +43,9 @@ export default {
         description: "Fortlöpande arbete: Gräv värn, maskera, röj skottfält och rekognosera växelstridsställningar. Arbetet pågår så länge man är i ställningen." 
       }
     ],
-    notes: "**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd"
-  },
-  sources: [
+    notes: "**E**ldställning här\n**K**lockan tolv är över\n**E**ld mellan … och …\n**R**apportera eldberedd",
+    sources: [
       { title: "Petri-bloggen: KUBMARS", url: "https://hemvarn.wordpress.com/2020/04/09/21-kubmars-en-icke-fyrkantig-stridsstallning/" }
     ]
+  },
 };
