@@ -339,7 +339,7 @@ export default function App() {
   const pages = packDeckIntoPages(deck);
 
   return (
-    <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
+    <div className="print-wrapper min-h-screen bg-slate-100 font-sans text-slate-900">
       {/* CSS för Utskrift */}
       <style>{`
         @media print {
@@ -348,6 +348,8 @@ export default function App() {
           .no-print { display: none !important; }
           .print-page { page-break-after: always; }
           .print-page:last-child { page-break-after: auto; }
+          .print-wrapper { padding: 0 !important; margin: 0 !important; min-height: 0 !important; background: white !important; }
+          .print-area { padding: 0 !important; margin: 0 !important; }
         }
       `}</style>
 
@@ -488,7 +490,7 @@ export default function App() {
       </div>
 
       {/* 4. UTSKRIFTSVY */}
-      <div className="w-full overflow-x-auto pb-12 flex flex-col items-center">
+      <div className="print-area w-full overflow-x-auto pb-12 flex flex-col items-center">
         {pages.length === 0 && (
           <div className="no-print w-[210mm] h-[297mm] bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-300">
             Dina A4-ark visas här när du lagt till kort.
