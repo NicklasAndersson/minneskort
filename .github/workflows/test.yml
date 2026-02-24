@@ -1,10 +1,13 @@
-name: Test
+name: Test & PDF
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -21,3 +24,34 @@ jobs:
 
       - name: Validate card schema
         run: npm run test:schema
+
+  pdf:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate PDF
+        run: npm run generate-pdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: minneskort
+          path: minneskort.pdf
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Minneskort build-${{ github.run_number }}
+          files: minneskort.pdf
+          generate_release_notes: true
