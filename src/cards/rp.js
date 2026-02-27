@@ -1,6 +1,6 @@
 export default {
   id: "rp",
-  category: "",
+  category: "Skytte",
   layout: "foldable",
   title: "RP",
   subtitle: "",
