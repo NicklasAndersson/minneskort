@@ -13,6 +13,6 @@ export default {
       { letter: "H", title: "Head/Hypothermia", description: "Förebygg nedkylning (filt, värmetäcke). Bedöm skallskada." },
     ],
     notes:
-      "PAWS är en påbyggnad för fortsatt vård:\nPain: Smärtlindring.\nAntibiotics: Ge antibiotika.\nWounds: Behandla övriga sår.\nSplinting: Stabilisera frakturer.\n\nM",
+      "PAWS är en påbyggnad för fortsatt vård:\nPain: Smärtlindring.\nAntibiotics: Ge antibiotika.\nWounds: Behandla övriga sår.\nSplinting: Stabilisera frakturer.\n\n",
   },
 };
