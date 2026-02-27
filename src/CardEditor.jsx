@@ -97,7 +97,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
       } else if (type === 'freetext') {
         next.content = { type, text: '', notes: '', sources };
       } else if (type === 'image') {
-        next.content = { type, imageUrl: '', text: '', notes: '', sources };
+        next.content = { type, imageUrl: '', imageRotation: 0, imageSize: 'medium', frontImageUrl: '', frontImageRotation: 0, frontImageSize: 'medium', text: '', notes: '', sources };
       }
       return next;
     });
@@ -265,15 +265,89 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
 
           {form.content.type === 'image' && (
             <>
-              <div>
-                <label className={labelClass}>Bild-URL</label>
-                <input className={inputClass} value={form.content.imageUrl} onChange={(e) => set('content.imageUrl', e.target.value)} placeholder="https://..." />
+              {/* Baksidebild */}
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Baksidebild</div>
+                <div>
+                  <label className={labelClass}>Bild-URL</label>
+                  <input className={inputClass} value={form.content.imageUrl || ''} onChange={(e) => set('content.imageUrl', e.target.value)} placeholder="https://..." />
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div>
+                    <label className={labelClass}>Rotation</label>
+                    <select className={inputClass} value={form.content.imageRotation || 0} onChange={(e) => set('content.imageRotation', Number(e.target.value))}>
+                      <option value={0}>0°</option>
+                      <option value={90}>90°</option>
+                      <option value={180}>180°</option>
+                      <option value={270}>270°</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelClass}>Storlek</label>
+                    <select className={inputClass} value={form.content.imageSize || 'medium'} onChange={(e) => set('content.imageSize', e.target.value)}>
+                      <option value="small">Liten</option>
+                      <option value="medium">Medium</option>
+                      <option value="large">Stor</option>
+                      <option value="fill">Fyll kortet</option>
+                    </select>
+                  </div>
+                </div>
+                {form.content.imageUrl && (
+                  <div className="mt-3 flex justify-center">
+                    <img
+                      src={form.content.imageUrl}
+                      alt="Förhandsgranskning"
+                      className="max-h-20 object-contain rounded border border-slate-200"
+                      style={form.content.imageRotation ? { transform: `rotate(${form.content.imageRotation}deg)` } : {}}
+                    />
+                  </div>
+                )}
               </div>
+
+              {/* Framsidebild */}
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Framsidebild (valfritt)</div>
+                <div>
+                  <label className={labelClass}>Bild-URL</label>
+                  <input className={inputClass} value={form.content.frontImageUrl || ''} onChange={(e) => set('content.frontImageUrl', e.target.value)} placeholder="https://..." />
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div>
+                    <label className={labelClass}>Rotation</label>
+                    <select className={inputClass} value={form.content.frontImageRotation || 0} onChange={(e) => set('content.frontImageRotation', Number(e.target.value))}>
+                      <option value={0}>0°</option>
+                      <option value={90}>90°</option>
+                      <option value={180}>180°</option>
+                      <option value={270}>270°</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelClass}>Storlek</label>
+                    <select className={inputClass} value={form.content.frontImageSize || 'medium'} onChange={(e) => set('content.frontImageSize', e.target.value)}>
+                      <option value="small">Liten</option>
+                      <option value="medium">Medium</option>
+                      <option value="large">Stor</option>
+                      <option value="fill">Fyll kortet</option>
+                    </select>
+                  </div>
+                </div>
+                {form.content.frontImageUrl && (
+                  <div className="mt-3 flex justify-center">
+                    <img
+                      src={form.content.frontImageUrl}
+                      alt="Förhandsgranskning"
+                      className="max-h-20 object-contain rounded border border-slate-200"
+                      style={form.content.frontImageRotation ? { transform: `rotate(${form.content.frontImageRotation}deg)` } : {}}
+                    />
+                  </div>
+                )}
+              </div>
+
               <div>
-                <label className={labelClass}>Text (markdown)</label>
+                <label className={labelClass}>Text (markdown, visas på baksidan)</label>
                 <textarea
                   className={`${inputClass} h-24 resize-y`}
-                  value={form.content.text}
+                  value={form.content.text || ''}
                   onChange={(e) => set('content.text', e.target.value)}
                   placeholder="Beskrivande text under bilden..."
                 />

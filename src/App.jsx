@@ -20,14 +20,34 @@ const FreeText = ({ text }) => (
   />
 );
 
-const ImageContent = ({ data }) => (
-  <div className="flex flex-col items-center mt-2 gap-3 text-[13px] text-slate-700">
-    {data.imageUrl && (
-      <img src={data.imageUrl} alt="Illustration" className="max-h-20 object-contain opacity-80" />
-    )}
-    <div dangerouslySetInnerHTML={{ __html: parseMarkdown(data.text) }} />
-  </div>
-);
+const IMAGE_SIZE_CLASSES = {
+  small: 'max-h-16 object-contain opacity-80',
+  medium: 'max-h-28 object-contain opacity-80',
+  large: 'max-h-44 object-contain opacity-80',
+  fill: 'w-full max-h-full object-contain',
+};
+
+const ImageContent = ({ imageUrl, text, rotation = 0, size = 'medium' }) => {
+  const sizeClass = IMAGE_SIZE_CLASSES[size] || IMAGE_SIZE_CLASSES.medium;
+  const isFill = size === 'fill';
+  const imgStyle = rotation ? { transform: `rotate(${rotation}deg)` } : {};
+
+  return (
+    <div className={`flex flex-col items-center mt-2 gap-3 text-[13px] text-slate-700${isFill ? ' flex-1 w-full' : ''}`}>
+      {imageUrl && (
+        <div className={`overflow-hidden flex items-center justify-center${isFill ? ' flex-1 w-full' : ''}`}>
+          <img
+            src={imageUrl}
+            alt="Illustration"
+            className={sizeClass}
+            style={imgStyle}
+          />
+        </div>
+      )}
+      {text && <div dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />}
+    </div>
+  );
+};
 
 // Ramsa på Framsidan (endast Bokstav + Kort titel)
 const MnemonicFront = ({ items }) => (
@@ -80,6 +100,9 @@ const FoldableFront = ({ card }) => (
       {card.subtitle && <p className="text-sm text-slate-600 italic px-2">{card.subtitle}</p>}
     </div>
     {card.content.type === 'mnemonic' && <MnemonicFront items={card.content.items} />}
+    {card.content.type === 'image' && card.content.frontImageUrl && (
+      <ImageContent imageUrl={card.content.frontImageUrl} rotation={card.content.frontImageRotation} size={card.content.frontImageSize} />
+    )}
     {card.content.frontNotes && (
       <div className="mt-auto pt-3 px-6 w-full text-left">
         <FreeText text={card.content.frontNotes} />
@@ -115,7 +138,7 @@ const FoldableBack = ({ card }) => (
     <CornerLineRight />
     {card.content.type === 'mnemonic' && <MnemonicBack items={card.content.items} />}
     {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
-    {card.content.type === 'image' && <ImageContent data={card.content} />}
+    {card.content.type === 'image' && <ImageContent imageUrl={card.content.imageUrl} text={card.content.text} rotation={card.content.imageRotation} size={card.content.imageSize} />}
     {card.content.notes && (
       <div className="mt-auto pt-1 border-t border-slate-200 text-[11px] text-slate-700 leading-tight"
         dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}
@@ -155,6 +178,9 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
                   ))}
                 </div>
               )}
+              {card.content.type === 'image' && card.content.frontImageUrl && (
+                <ImageContent imageUrl={card.content.frontImageUrl} rotation={card.content.frontImageRotation} size={card.content.frontImageSize} />
+              )}
               {card.content.frontNotes && (
                 <div className="mt-auto pt-2 px-4 w-full text-left">
                   <div className="text-[11px] text-slate-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.frontNotes) }} />
@@ -173,7 +199,7 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
                 </div>
               )}
               {card.content.type === 'freetext' && <FreeText text={card.content.text} />}
-              {card.content.type === 'image' && <ImageContent data={card.content} />}
+              {card.content.type === 'image' && <ImageContent imageUrl={card.content.imageUrl} text={card.content.text} rotation={card.content.imageRotation} size={card.content.imageSize} />}
               {card.content.notes && (
                 <div className="mt-auto pt-1 border-t border-slate-200 text-[11px] text-slate-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: parseMarkdown(card.content.notes) }}

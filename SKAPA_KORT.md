@@ -82,6 +82,43 @@ När du sparar filerna kommer ditt nya kort automatiskt att dyka upp i appen!
 | `subtitle` | Nej | Undertext på framsidan |
 | `content.type` | Ja | `"mnemonic"`, `"freetext"` eller `"image"` |
 | `content.items` | Mnemonic | Array med `{ letter, title, description }` |
-| `content.text` | Freetext/Image | Markdown-text |
-| `content.imageUrl` | Image | URL till bild |
+| `content.text` | Freetext/Image | Markdown-text (visas på baksidan) |
+| `content.imageUrl` | Image | URL till bild på baksidan |
+| `content.imageRotation` | Nej | Rotation på baksidebild: `0`, `90`, `180` eller `270` (default `0`) |
+| `content.imageSize` | Nej | Storlek på baksidebild: `"small"`, `"medium"`, `"large"` eller `"fill"` (default `"medium"`) |
+| `content.frontImageUrl` | Nej | URL till bild på framsidan |
+| `content.frontImageRotation` | Nej | Rotation på framsidebild: `0`, `90`, `180` eller `270` (default `0`) |
+| `content.frontImageSize` | Nej | Storlek på framsidebild: `"small"`, `"medium"`, `"large"` eller `"fill"` (default `"medium"`) |
 | `content.notes` | Nej | Fritext under items-listan på baksidan |
+| `content.frontNotes` | Nej | Fritext längst ned på framsidan |
+| `content.sources` | Nej | Array med `{ title, url? }` — källor |
+
+### Bildstorlekar
+
+| Värde | Beskrivning |
+|-------|-------------|
+| `"small"` | Max 64px hög |
+| `"medium"` | Max 112px hög (standard) |
+| `"large"` | Max 176px hög |
+| `"fill"` | Fyller hela kortytan |
+
+### Exempel för ett bildkort (`image`):
+```javascript
+export default {
+  id: "mitt-bildkort",
+  category: "Min Kategori",
+  layout: "foldable",
+  title: "Kortets Titel",
+  subtitle: "En kort undertext",
+  content: {
+    type: "image",
+    imageUrl: "https://example.com/bild.png",
+    imageRotation: 0,
+    imageSize: "large",
+    frontImageUrl: "https://example.com/framsida.png",
+    frontImageRotation: 90,
+    frontImageSize: "medium",
+    text: "Beskrivande text under bilden på baksidan.",
+  },
+};
+```

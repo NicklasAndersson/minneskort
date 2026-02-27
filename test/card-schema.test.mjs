@@ -22,10 +22,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const cardsDir = join(__dirname, "..", "src", "cards");
 
 const ALLOWED_TOP_KEYS = new Set(["id", "category", "layout", "title", "subtitle", "content"]);
-const ALLOWED_CONTENT_KEYS = new Set(["type", "items", "text", "notes", "frontNotes", "sources"]);
+const ALLOWED_CONTENT_KEYS = new Set(["type", "items", "text", "notes", "frontNotes", "sources", "imageUrl", "imageRotation", "imageSize", "frontImageUrl", "frontImageRotation", "frontImageSize"]);
 const ALLOWED_ITEM_KEYS = new Set(["letter", "title", "description"]);
 const ALLOWED_SOURCE_KEYS = new Set(["title", "url"]);
-const ALLOWED_TYPES = new Set(["mnemonic", "freetext"]);
+const ALLOWED_TYPES = new Set(["mnemonic", "freetext", "image"]);
 
 let errors = 0;
 
@@ -104,7 +104,7 @@ async function main() {
     }
 
     if (!ALLOWED_TYPES.has(content.type)) {
-      fail(file, `content.type måste vara "mnemonic" eller "freetext", fick: "${content.type}"`);
+      fail(file, `content.type måste vara "mnemonic", "freetext" eller "image", fick: "${content.type}"`);
     }
 
     // Mnemonic-specifik validering
@@ -129,6 +129,28 @@ async function main() {
     if (content.type === "freetext") {
       if (typeof content.text !== "string" || content.text.length === 0) {
         fail(file, "freetext-kort måste ha en icke-tom text-sträng");
+      }
+    }
+
+    // Image-specifik validering
+    if (content.type === "image") {
+      if (content.imageUrl !== undefined && typeof content.imageUrl !== "string") {
+        fail(file, "image-kort: imageUrl måste vara en sträng");
+      }
+      if (content.imageRotation !== undefined && ![0, 90, 180, 270].includes(content.imageRotation)) {
+        fail(file, "image-kort: imageRotation måste vara 0, 90, 180 eller 270");
+      }
+      if (content.imageSize !== undefined && !["small", "medium", "large", "fill"].includes(content.imageSize)) {
+        fail(file, 'image-kort: imageSize måste vara "small", "medium", "large" eller "fill"');
+      }
+      if (content.frontImageUrl !== undefined && typeof content.frontImageUrl !== "string") {
+        fail(file, "image-kort: frontImageUrl måste vara en sträng");
+      }
+      if (content.frontImageRotation !== undefined && ![0, 90, 180, 270].includes(content.frontImageRotation)) {
+        fail(file, "image-kort: frontImageRotation måste vara 0, 90, 180 eller 270");
+      }
+      if (content.frontImageSize !== undefined && !["small", "medium", "large", "fill"].includes(content.frontImageSize)) {
+        fail(file, 'image-kort: frontImageSize måste vara "small", "medium", "large" eller "fill"');
       }
     }
 

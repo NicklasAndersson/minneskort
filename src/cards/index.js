@@ -18,6 +18,7 @@ import osk from "./osk.js";
 import pedars from "./pedars.js";
 import rassoika from "./rassoika.js";
 import repetera from "./repetera.js";
+import rp from "./rp.js";
 
 const initialCards = [
   femPunktsorder,
@@ -40,6 +41,7 @@ const initialCards = [
   pedars,
   rassoika,
   repetera,
+  rp,
 ];
 
 export default initialCards;
