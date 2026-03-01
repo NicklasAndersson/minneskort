@@ -19,6 +19,7 @@ import pedars from "./pedars.js";
 import rassoika from "./rassoika.js";
 import repetera from "./repetera.js";
 import rp from "./rp.js";
+import tqKonvertering from "./tq-konvertering.js";
 
 const initialCards = [
   femPunktsorder,
@@ -42,6 +43,7 @@ const initialCards = [
   rassoika,
   repetera,
   rp,
+  tqKonvertering,
 ];
 
 export default initialCards;
