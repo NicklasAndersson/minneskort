@@ -2,6 +2,7 @@ import femPunktsorder from "./5-punktsordern.js";
 import sjuS from "./7s.js";
 import attaF from "./8f.js";
 import atmist from "./atmist.js";
+import bokstaveringsalfabetet from "./bokstaveringsalfabetet.js";
 import eobusare from "./eobusare.js";
 import erobusare from "./erobusare.js";
 import eskapera from "./eskapera.js";
@@ -11,6 +12,7 @@ import kubmars from "./kubmars.js";
 import lCabcde from "./c-abcde.js";
 import march from "./march.js";
 import methane from "./methane.js";
+import natoAlfabetet from "./nato-alfabetet.js";
 import obk from "./obk.js";
 import obo from "./obo.js";
 import obslosa from "./obslosa.js";
@@ -26,6 +28,7 @@ const initialCards = [
   sjuS,
   attaF,
   atmist,
+  bokstaveringsalfabetet,
   eobusare,
   erobusare,
   eskapera,
@@ -35,6 +38,7 @@ const initialCards = [
   lCabcde,
   march,
   methane,
+  natoAlfabetet,
   obk,
   obo,
   obslosa,
