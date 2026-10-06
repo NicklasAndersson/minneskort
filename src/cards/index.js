@@ -22,6 +22,11 @@ import rassoika from "./rassoika.js";
 import repetera from "./repetera.js";
 import rp from "./rp.js";
 import tqKonvertering from "./tq-konvertering.js";
+import nioLineMedevac from "./9-line-medevac.js";
+import fyraS3V from "./4s3v.js";
+import solo from "./solo.js";
+import salute from "./salute.js";
+import pace from "./pace.js";
 
 const initialCards = [
   femPunktsorder,
@@ -48,6 +53,11 @@ const initialCards = [
   repetera,
   rp,
   tqKonvertering,
+  nioLineMedevac,
+  fyraS3V,
+  solo,
+  salute,
+  pace,
 ];
 
 export default initialCards;
