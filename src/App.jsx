@@ -156,8 +156,8 @@ const FoldableBack = ({ card }) => (
 
 // Förhandsgranskningsmodal
 const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
-  <div className="fixed inset-0 bg-black/40 z-50 flex items-start justify-center overflow-y-auto p-6" onClick={onClose}>
-    <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl my-8" onClick={(e) => e.stopPropagation()}>
+  <div className="fixed inset-0 bg-black/40 z-50 flex items-start justify-center overflow-y-auto p-2 sm:p-6" onClick={onClose}>
+    <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl my-2 sm:my-8" onClick={(e) => e.stopPropagation()}>
       <div className="flex justify-between items-center p-5 border-b border-slate-200">
         <div>
           <h2 className="text-lg font-black text-black">{card.title}</h2>
@@ -167,10 +167,10 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
       </div>
 
       {/* Skalad kortförhandsgranskning */}
-      <div className="p-5 flex justify-center">
+      <div className="p-3 sm:p-5 flex justify-center">
         <div className="border border-gray-300 rounded-lg overflow-hidden" style={{ width: '100%', maxWidth: '700px' }}>
-          <div className="flex" style={{ height: '360px' }}>
-            <div className="w-1/2 h-full border-r border-dashed border-gray-400 p-4 flex flex-col items-center text-center relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:h-[360px]">
+            <div className="w-full sm:w-1/2 sm:h-full min-h-[240px] border-b sm:border-b-0 sm:border-r border-dashed border-gray-400 p-4 flex flex-col items-center text-center relative overflow-hidden">
               <div className="mt-4">
                 <h1 className="text-2xl font-black text-black mb-1">{card.title}</h1>
                 {card.subtitle && <p className="text-xs text-black italic px-2">{card.subtitle}</p>}
@@ -194,7 +194,7 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
                 </div>
               )}
             </div>
-            <div className="w-1/2 h-full p-4 flex flex-col overflow-y-auto">
+            <div className="w-full sm:w-1/2 sm:h-full p-4 flex flex-col sm:overflow-y-auto">
               {card.content.type === 'mnemonic' && (
                 <div className="flex flex-col gap-1 mt-0.5">
                   {card.content.items.map((item, idx) => (
@@ -236,7 +236,7 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
       )}
 
       {/* Knappar */}
-      <div className="flex justify-end gap-3 p-5 border-t border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:justify-end gap-2 sm:gap-3 p-4 sm:p-5 border-t border-slate-200">
         <button
           onClick={() => onCopy(card)}
           className="px-4 py-2 text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
@@ -387,6 +387,8 @@ export default function App() {
     <div className="print-wrapper min-h-screen bg-slate-100 font-sans text-slate-900">
       {/* CSS för Utskrift */}
       <style>{`
+        @media screen and (max-width: 820px) { .print-page, .a4-placeholder { zoom: 0.8; } }
+        @media screen and (max-width: 480px) { .print-page, .a4-placeholder { zoom: 0.44; } }
         @media print {
           @page { size: A4 portrait; margin: 0; }
           body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -419,22 +421,22 @@ export default function App() {
       )}
 
       {/* Användargränssnitt (Döljs vid utskrift) */}
-      <div className="no-print max-w-6xl mx-auto p-6">
-        <header className="flex justify-between items-center mb-8 border-b border-slate-300 pb-4">
+      <div className="no-print max-w-6xl mx-auto p-4 sm:p-6">
+        <header className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 border-b border-slate-300 pb-4">
           <div>
             <h1 className="text-2xl font-black text-slate-800">Minneskort Hemvärnet</h1>
             <p className="text-slate-500 text-sm">Bygg och skriv ut dina minneskort.</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={handleImport}
-              className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
+              className="text-sm bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
             >
               Ladda upp
             </button>
             <button
               onClick={handleExport}
-              className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
+              className="text-sm bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-2 px-4 rounded-lg transition-colors"
             >
               Ladda ner
             </button>
@@ -448,7 +450,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
           {/* Vänster: Bibliotek */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
             <div className="flex justify-between items-center mb-4">
@@ -463,25 +465,25 @@ export default function App() {
             <div className="flex flex-col gap-1">
               {library.map((card) => (
                 <div key={card.id} className="flex justify-between items-center py-1.5 px-2 hover:bg-slate-50 border border-slate-100 rounded transition-colors">
-                  <div className="min-w-0 cursor-pointer" onClick={() => setPreviewCard(card)}>
-                    <span className="font-bold text-sm text-slate-800 hover:text-blue-700 transition-colors">
+                  <div className="min-w-0 flex-1 cursor-pointer" onClick={() => setPreviewCard(card)}>
+                    <span className="block sm:inline font-bold text-sm text-slate-800 hover:text-blue-700 transition-colors">
                       {card.title}
                       {isCustom(card) && <span className="ml-1.5 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-semibold">Eget</span>}
                     </span>
-                    <span className="ml-2 text-xs text-blue-600 font-semibold">{card.category}</span>
+                    <span className="block sm:inline sm:ml-2 text-xs text-blue-600 font-semibold">{card.category}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     {isCustom(card) && (
                       <>
                         <button
                           onClick={() => handleEditCard(card)}
-                          className="text-xs text-slate-400 hover:text-blue-600 font-semibold py-1 px-2"
+                          className="text-xs text-slate-400 hover:text-blue-600 font-semibold py-2 sm:py-1 px-2"
                         >
                           Redigera
                         </button>
                         <button
                           onClick={() => handleDeleteCard(card)}
-                          className="text-xs text-slate-400 hover:text-red-600 font-semibold py-1 px-2"
+                          className="text-xs text-slate-400 hover:text-red-600 font-semibold py-2 sm:py-1 px-2"
                         >
                           Ta bort
                         </button>
@@ -489,7 +491,7 @@ export default function App() {
                     )}
                     <button
                       onClick={() => addToDeck(card)}
-                      className={`text-sm font-semibold py-1 px-3 rounded transition-all duration-300 ${
+                      className={`text-sm font-semibold whitespace-nowrap py-2 sm:py-1 px-3 rounded transition-all duration-300 ${
                         addedCardId === card.id
                           ? 'bg-green-100 text-green-700'
                           : 'bg-blue-100 hover:bg-blue-200 text-blue-700'
@@ -520,7 +522,7 @@ export default function App() {
                     </div>
                     <button
                       onClick={() => removeFromDeck(idx)}
-                      className="text-sm text-red-500 hover:text-red-700 font-semibold py-1 px-2"
+                      className="text-sm text-red-500 hover:text-red-700 font-semibold py-2 sm:py-1 px-2"
                     >
                       Ta bort
                     </button>
@@ -537,7 +539,7 @@ export default function App() {
       {/* 4. UTSKRIFTSVY */}
       <div className="print-area w-full overflow-x-auto pb-12 flex flex-col items-center">
         {pages.length === 0 && (
-          <div className="no-print w-[210mm] h-[297mm] bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-300">
+          <div className="no-print a4-placeholder w-[210mm] h-[297mm] bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-300">
             Dina A4-ark visas här när du lagt till kort.
           </div>
         )}

@@ -110,8 +110,8 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-start justify-center overflow-y-auto p-6">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl my-8">
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-start justify-center overflow-y-auto p-2 sm:p-6">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl my-2 sm:my-8">
         <div className="flex justify-between items-center p-5 border-b border-slate-200">
           <h2 className="text-lg font-black text-slate-800">
             {card ? 'Redigera kort' : 'Skapa nytt kort'}
@@ -120,7 +120,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
         </div>
 
         <div className="p-5 flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Titel *</label>
               <input className={inputClass} value={form.title} onChange={(e) => set('title', e.target.value)} placeholder="T.ex. RASSOIKA" />
@@ -131,7 +131,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Undertext</label>
               <input className={inputClass} value={form.subtitle} onChange={(e) => set('subtitle', e.target.value)} placeholder="Kort beskrivning" />
@@ -166,7 +166,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
               <label className={labelClass}>Ramsans bokstäver</label>
               <div className="flex flex-col gap-2">
                 {form.content.items.map((item, idx) => (
-                  <div key={idx} className="flex gap-2 items-start">
+                  <div key={idx} className="flex flex-wrap sm:flex-nowrap gap-2 items-start">
                     <input
                       className="w-10 border border-slate-300 rounded px-2 py-1.5 text-sm text-center font-bold focus:outline-none focus:ring-2 focus:ring-blue-400"
                       value={item.letter}
@@ -175,13 +175,13 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
                       maxLength={2}
                     />
                     <input
-                      className="w-36 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="flex-1 min-w-0 sm:flex-none sm:w-36 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                       value={item.title}
                       onChange={(e) => setItem(idx, 'title', e.target.value)}
                       placeholder="Titel"
                     />
                     <input
-                      className="flex-1 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="order-last basis-full sm:order-none sm:basis-auto flex-1 min-w-0 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                       value={item.description}
                       onChange={(e) => setItem(idx, 'description', e.target.value)}
                       placeholder="Beskrivning"
@@ -221,7 +221,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
                   <label className={labelClass}>Bild-URL</label>
                   <input className={inputClass} value={form.content.imageUrl || ''} onChange={(e) => set('content.imageUrl', e.target.value)} placeholder="https://..." />
                 </div>
-                <div className="grid grid-cols-2 gap-3 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                   <div>
                     <label className={labelClass}>Rotation</label>
                     <select className={inputClass} value={form.content.imageRotation || 0} onChange={(e) => set('content.imageRotation', Number(e.target.value))}>
@@ -260,7 +260,7 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
                   <label className={labelClass}>Bild-URL</label>
                   <input className={inputClass} value={form.content.frontImageUrl || ''} onChange={(e) => set('content.frontImageUrl', e.target.value)} placeholder="https://..." />
                 </div>
-                <div className="grid grid-cols-2 gap-3 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                   <div>
                     <label className={labelClass}>Rotation</label>
                     <select className={inputClass} value={form.content.frontImageRotation || 0} onChange={(e) => set('content.frontImageRotation', Number(e.target.value))}>
@@ -318,15 +318,15 @@ export default function CardEditor({ card, initialData, onSave, onCancel }) {
             <label className={labelClass}>Källor (valfritt)</label>
             <div className="flex flex-col gap-2">
               {(form.content.sources || []).map((src, idx) => (
-                <div key={idx} className="flex gap-2 items-start">
+                <div key={idx} className="flex flex-wrap sm:flex-nowrap gap-2 items-start">
                   <input
-                    className="w-40 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="flex-1 min-w-0 sm:flex-none sm:w-40 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                     value={src.title}
                     onChange={(e) => setSource(idx, 'title', e.target.value)}
                     placeholder="Titel"
                   />
                   <input
-                    className="flex-1 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="order-last basis-full sm:order-none sm:basis-auto flex-1 min-w-0 border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                     value={src.url}
                     onChange={(e) => setSource(idx, 'url', e.target.value)}
                     placeholder="https://..."
