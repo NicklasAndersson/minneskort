@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import initialCards from './cards';
-import CardEditor, { loadCustomCards, saveCustomCards, exportCardsToFile, importCardsFromFile } from './CardEditor';
+import CardEditor from './CardEditor';
+import { loadCustomCards, saveCustomCards, exportCardsToFile, importCardsFromFile } from './cardStorage';
 
 // Enkel markdown-parser (escapar HTML först – korten kan komma från importerade filer)
 const escapeHtml = (text) =>
