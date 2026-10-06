@@ -12,7 +12,11 @@ export function loadCustomCards() {
 }
 
 export function saveCustomCards(cards) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+  } catch {
+    // ponytail: tyst fallback (blockerad/full localStorage); egna kort sparas då bara i sessionen
+  }
 }
 
 export function exportCardsToFile(cards) {

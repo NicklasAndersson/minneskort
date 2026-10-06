@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import initialCards from './cards';
 import CardEditor, { loadCustomCards, saveCustomCards, exportCardsToFile, importCardsFromFile } from './CardEditor';
 
-// Enkel markdown-parser
+// Enkel markdown-parser (escapar HTML först – korten kan komma från importerade filer)
+const escapeHtml = (text) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// Tillåt bara http(s)-länkar (blockerar t.ex. javascript:)
+const safeUrl = (url) => (/^https?:\/\//i.test(url) ? url : undefined);
+
 const parseMarkdown = (text) => {
   if (!text) return "";
-  let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  let html = escapeHtml(String(text)).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
   html = html.replace(/\n/g, '<br/>');
   return html;
@@ -120,8 +126,8 @@ const SourcesList = ({ sources }) => {
       <ul className="list-none p-0 m-0 flex flex-col gap-0.5">
         {sources.map((src, idx) => (
           <li key={idx} className="text-[8px] text-black leading-tight truncate">
-            {src.url ? (
-              <a href={src.url} className="underline text-black hover:text-black">{src.title || src.url}</a>
+            {safeUrl(src.url) ? (
+              <a href={safeUrl(src.url)} className="underline text-black hover:text-black">{src.title || src.url}</a>
             ) : (
               <span>{src.title}</span>
             )}
@@ -217,8 +223,8 @@ const CardPreview = ({ card, onClose, onCopy, onAddToDeck }) => (
           <ul className="list-none p-0 m-0 flex flex-col gap-0.5">
             {card.content.sources.map((src, idx) => (
               <li key={idx} className="text-xs text-black leading-tight">
-                {src.url ? (
-                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="underline text-blue-500 hover:text-blue-700">{src.title || src.url}</a>
+                {safeUrl(src.url) ? (
+                  <a href={safeUrl(src.url)} target="_blank" rel="noopener noreferrer" className="underline text-blue-500 hover:text-blue-700">{src.title || src.url}</a>
                 ) : (
                   <span>{src.title}</span>
                 )}
@@ -277,6 +283,14 @@ const packDeckIntoPages = (deck) => {
   return pages;
 };
 
+
+// Minimikontroll av importerade kort så att renderingen inte kraschar
+const isValidCard = (c) =>
+  c && typeof c.title === 'string' && c.title &&
+  c.content && ['mnemonic', 'freetext', 'image'].includes(c.content.type) &&
+  (c.content.type !== 'mnemonic' ||
+    (Array.isArray(c.content.items) &&
+      c.content.items.every((i) => i && typeof i.letter === 'string' && typeof i.title === 'string' && typeof i.description === 'string')));
 
 // 5. HUVUDAPPLIKATION
 export default function App() {
@@ -346,12 +360,16 @@ export default function App() {
   const handleImport = async () => {
     try {
       const cards = await importCardsFromFile();
-      const newCards = cards.map((c) => ({
-        ...c,
-        layout: 'foldable',
-        id: c.id || c.title.toLowerCase().replace(/[^a-zåäö0-9]+/g, '-'),
-      }));
+      const valid = cards.filter(isValidCard);
+      const taken = new Set(library.map((c) => c.id));
+      const newCards = valid.map((c) => {
+        let id = c.id || c.title.toLowerCase().replace(/[^a-zåäö0-9]+/g, '-');
+        if (taken.has(id)) id = id + '-' + Date.now();
+        taken.add(id);
+        return { ...c, layout: 'foldable', id };
+      });
       setCustomCards((prev) => [...prev, ...newCards]);
+      if (valid.length < cards.length) alert(`${cards.length - valid.length} ogiltiga kort hoppades över.`);
     } catch (err) {
       if (err.message) alert(err.message);
     }
