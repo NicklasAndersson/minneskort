@@ -8,6 +8,7 @@
  * Kör: npm test
  */
 
+import { readdirSync } from "fs";
 import { launch } from "puppeteer";
 import { createServer } from "vite";
 
@@ -43,6 +44,11 @@ async function runTest() {
       if (text === "+ Lägg till") {
         addBtnHandles.push(btn);
       }
+    }
+
+    const expected = readdirSync("./src/cards").filter((f) => f.endsWith(".js") && f !== "index.js").length;
+    if (addBtnHandles.length !== expected) {
+      throw new Error(`Hittade ${addBtnHandles.length} "+ Lägg till"-knappar, förväntade ${expected} kort`);
     }
 
     console.log(`Lägger till ${addBtnHandles.length} kort...`);

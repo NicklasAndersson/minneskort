@@ -61,12 +61,11 @@ Workflow: [.github/workflows/test.yml](.github/workflows/test.yml) ("Test & PDF"
 
 | Trigger | Jobb | Resultat |
 | --- | --- | --- |
-| Pull request mot `main` | `test` | Validerar kortschemat (`npm run test:schema`) |
+| Pull request mot `main` | `test` | Lint och `npm test` (kortschema + overflow) |
 | Push till `main` | `test` → `pdf` | Genererar `minneskort.pdf` (`npm run generate-pdf`) och skapar en GitHub-release |
 
 - Releasen får taggen `build-<körningsnummer>` (t.ex. `build-15`) med PDF:en bifogad och autogenererade release notes.
 - Körningsnumret räknas per workflow, så nummer kan hoppa över (build-9, 13, 15).
-- CI kör bara schematestet. `card-overflow`-testet körs bara lokalt via `npm test` / `npm run deploy`.
 
 ### Webbsidan (manuellt, Cloudflare Workers)
 

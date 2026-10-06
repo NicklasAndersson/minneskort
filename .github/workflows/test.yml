@@ -22,8 +22,10 @@ jobs:
 
       - run: npm ci
 
-      - name: Validate card schema
-        run: npm run test:schema
+      - run: npm run lint
+
+      - name: Test (schema + overflow)
+        run: npm test
 
   pdf:
     needs: test
